@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eats AI — Eat Smarter. Live Better.</title>
+  <meta name="description" content="Your all-in-one nutrition companion. Scan meals, manage your pantry, generate personalized recipes, and hit your health goals." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="logo.png" />
+
+  <style>
+/* ─── RESET ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root {
+  /* Dark surfaces — slight warm green tint keeps it organic */
+  --bg:       #0B0D0A;
+  --s1:       #111410;
+  --s2:       #181C16;
+  --s3:       #1F241C;
+  --s4:       #272D23;
+
+  /* Brand greens */
+  --g-bright: #B8CFA0;
+  --g-mid:    #8FA876;
+  --g-dark:   #5C7A48;
+  --g-deep:   #3A5230;
+
+  /* Text */
+  --t1: #EEE9E0;   /* primary — warm off-white */
+  --t2: #9EA898;   /* secondary */
+  --t3: #5A6355;   /* muted */
+
+  /* Utility */
+  --border:  rgba(184,207,160,.10);
+  --glow:    rgba(143,168,118,.18);
+  --white:   #ffffff;
+  --r-sm: .625rem;
+  --r-md: 1rem;
+  --r-lg: 1.5rem;
+  --r-xl: 2rem;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--t1);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* noise grain overlay — premium texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .028;
+}
+
+/* ─── NAV ─────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .875rem 2rem;
+  background: rgba(11,13,10,.82);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: .55rem; text-decoration: none; }
+.nav-logo img { width: 1.875rem; height: 1.875rem; border-radius: .5rem; }
+.nav-logo-text { font-size: .9375rem; font-weight: 700; color: var(--t1); letter-spacing: -.02em; }
+.nav-links { display: flex; align-items: center; gap: 1.75rem; }
+.nav-links a {
+  font-size: .8125rem; font-weight: 500; color: var(--t3);
+  text-decoration: none; letter-spacing: .01em;
+  transition: color .15s;
+}
+.nav-links a:hover { color: var(--t1); }
+.nav-cta {
+  font-size: .8125rem; font-weight: 600;
+  padding: .5rem 1.125rem; border-radius: 100px;
+  background: var(--g-bright); color: var(--bg);
+  text-decoration: none; letter-spacing: -.01em;
+  transition: background .15s, transform .15s;
+}
+.nav-cta:hover { background: var(--white); transform: translateY(-1px); }
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero {
+  min-height: 94vh;
+  display: flex; align-items: center;
+  padding: 5rem 2rem 4rem;
+  max-width: 1200px; margin: 0 auto;
+  gap: 5rem;
+  position: relative;
+}
+
+/* ambient glow behind phone */
+.hero::after {
+  content: '';
+  position: absolute; right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 560px; height: 560px;
+  background: radial-gradient(ellipse, rgba(92,122,72,.28) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+.hero-text { flex: 1; min-width: 0; position: relative; z-index: 1; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .3rem .9rem .3rem .45rem;
+  border-radius: 100px;
+  background: rgba(184,207,160,.08);
+  border: 1px solid rgba(184,207,160,.2);
+  font-size: .6875rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--g-bright);
+  margin-bottom: 2rem;
+}
+.badge-pulse {
+  width: .4375rem; height: .4375rem; border-radius: 50%;
+  background: var(--g-bright);
+  box-shadow: 0 0 0 0 rgba(184,207,160,.5);
+  animation: badgePulse 2.2s ease infinite;
+}
+@keyframes badgePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(184,207,160,.5); }
+  70%  { box-shadow: 0 0 0 6px rgba(184,207,160,0); }
+  100% { box-shadow: 0 0 0 0 rgba(184,207,160,0); }
+}
+
+.hero h1 {
+  font-size: clamp(3.25rem, 7vw, 5.5rem);
+  font-weight: 900; line-height: 1.02; letter-spacing: -.045em;
+  margin-bottom: 1.5rem;
+}
+.h1-white { color: var(--t1); }
+.h1-green {
+  background: linear-gradient(135deg, var(--g-bright) 0%, var(--g-mid) 60%, #6b9050 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 1.0625rem; line-height: 1.75; color: var(--t2);
+  max-width: 440px; margin-bottom: 2.25rem; font-weight: 400;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.5rem; align-items: center; }
+
+.badge-link {
+  display: inline-flex; align-items: center;
+  transition: transform .15s, opacity .15s;
+  text-decoration: none;
+}
+.badge-link:hover { transform: translateY(-2px); opacity: .88; }
+.store-badge { height: 44px; width: auto; display: block; }
+.store-badge-play { height: 64px; margin: -10px 0; }
+
+/* Apple badge: invert to white variant for dark background */
+.store-badge-apple { filter: invert(1); }
+
+.hero-fine {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .75rem; color: var(--t3);
+}
+.hero-fine svg { color: var(--g-mid); }
+
+/* ─── HERO VISUAL ───────────────────────────────────────── */
+.hero-visual {
+  flex: 0 0 380px;
+  position: relative; z-index: 1;
+  display: flex; justify-content: center;
+}
+
+.hero-phone {
+  position: relative;
+  filter: drop-shadow(0 40px 80px rgba(0,0,0,.7)) drop-shadow(0 0 60px rgba(92,122,72,.25));
+}
+.hero-phone img {
+  width: 100%; max-width: 340px;
+  border-radius: 2.5rem; display: block;
+}
+
+@media (max-width: 900px) {
+  .hero { flex-direction: column; min-height: auto; padding-top: 3rem; gap: 3rem; }
+  .hero-visual { flex: none; width: 100%; max-width: 320px; }
+  .hero::after { display: none; }
+}
+@media (max-width: 640px) {
+  nav { padding: .75rem 1.25rem; }
+  .nav-links { display: none; }
+  .hero { padding: 2.5rem 1.25rem 3rem; }
+}
+
+/* ─── DIVIDER LINE ─────────────────────────────────────── */
+.hr { height: 1px; background: var(--border); margin: 0; }
+
+/* ─── MARQUEE ──────────────────────────────────────────── */
+.marquee-band {
+  overflow: hidden; user-select: none;
+  padding: 1.125rem 0;
+  background: var(--s1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.marquee-track { display: flex; width: max-content; animation: marquee 24s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-word {
+  font-size: .6875rem; font-weight: 800; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--t3);
+  padding: 0 1.25rem; white-space: nowrap;
+  transition: color .2s;
+}
+.marquee-sep {
+  display: flex; align-items: center;
+  font-size: .45rem; color: var(--g-dark);
+}
+
+/* ─── SECTION HEADERS ──────────────────────────────────── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .6875rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--g-mid);
+  margin-bottom: .625rem;
+}
+.eyebrow::before {
+  content: ''; display: block;
+  width: 1.25rem; height: 1.5px;
+  background: var(--g-mid); border-radius: 2px;
+}
+.section-title {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 800; letter-spacing: -.04em; line-height: 1.1;
+  color: var(--t1);
+}
+
+/* ─── FEATURES ─────────────────────────────────────────── */
+.features-section {
+  padding: 6rem 0 0;
+  background: var(--bg);
+}
+.features-header {
+  padding: 0 2rem 3.5rem;
+  text-align: center;
+}
+.features-sub {
+  font-size: 1rem; color: var(--t2); line-height: 1.7;
+  max-width: 480px; margin: .875rem auto 0;
+}
+
+.features-scroll-outer { position: relative; overflow: hidden; }
+.features-fade-l, .features-fade-r {
+  position: absolute; top: 0; bottom: 0; width: 14rem; z-index: 10; pointer-events: none;
+}
+.features-fade-l { left: 0;  background: linear-gradient(to right, var(--bg) 20%, transparent); }
+.features-fade-r { right: 0; background: linear-gradient(to left,  var(--bg) 20%, transparent); }
+
+.features-track {
+  display: flex;
+  animation: featScroll 36s linear infinite;
+  width: max-content;
+  padding: 1.5rem 0 3rem;
+}
+.features-track:hover { animation-play-state: paused; }
+@keyframes featScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.feature-slide { padding: 0 .75rem; flex-shrink: 0; }
+.feature-slide img {
+  height: 540px; width: auto; display: block;
+  border-radius: 2.25rem;
+  /* no box-shadow — let the image speak; add subtle glow instead */
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,.65));
+  transition: transform .35s cubic-bezier(.22,.68,0,1.2), filter .35s;
+}
+.feature-slide img:hover {
+  transform: translateY(-8px) scale(1.02);
+  filter: drop-shadow(0 36px 64px rgba(0,0,0,.7)) drop-shadow(0 0 32px rgba(143,168,118,.15));
+}
+
+/* ─── TESTIMONIALS ─────────────────────────────────────── */
+.testimonials {
+  padding: 7rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+}
+.testimonials-header { margin-bottom: 3.5rem; }
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px; /* gap is the border */
+  background: var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.testi-card {
+  background: var(--s1);
+  padding: 2rem;
+  display: flex; flex-direction: column; gap: 1.25rem;
+  transition: background .2s;
+}
+.testi-card:hover { background: var(--s2); }
+
+.testi-stars { display: flex; gap: .2rem; }
+.testi-star { color: var(--g-mid); font-size: .8rem; }
+
+.testi-quote {
+  font-size: .9375rem; line-height: 1.75;
+  color: var(--t2); flex: 1;
+  font-style: italic;
+}
+.testi-quote::before {
+  content: '\201C';
+  font-size: 2rem; line-height: 0; vertical-align: -.45em;
+  color: var(--g-dark); margin-right: .1rem;
+  font-style: normal;
+}
+
+.testi-person { display: flex; align-items: center; gap: .875rem; }
+.testi-avatar {
+  width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0;
+  border: 1.5px solid var(--s4);
+  filter: grayscale(20%);
+}
+.testi-name { font-size: .875rem; font-weight: 700; color: var(--t1); }
+.testi-role { font-size: .7rem; color: var(--t3); margin-top: .1rem; letter-spacing: .02em; }
+
+/* ─── COMPARISON ───────────────────────────────────────── */
+.comparison-section {
+  padding: 0 2rem 7rem;
+  max-width: 1000px; margin: 0 auto;
+}
+.comparison-header { margin-bottom: 2.5rem; }
+.comparison-sub { font-size: .875rem; color: var(--t3); margin-top: .5rem; }
+
+.comp-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden;
+}
+
+.comp-table thead th {
+  padding: 1rem 1.5rem;
+  font-size: .6875rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--t3);
+  background: var(--s2);
+  border-bottom: 1px solid var(--border);
+}
+.comp-table thead th:first-child { text-align: left; border-radius: var(--r-lg) 0 0 0; }
+.comp-table thead th:not(:first-child) { text-align: center; width: 150px; }
+.comp-table thead th:last-child { border-radius: 0 var(--r-lg) 0 0; }
+.comp-table thead th.col-us {
+  background: var(--g-deep);
+  color: var(--g-bright);
+  position: relative;
+}
+/* "EATS AI" column glow line */
+.comp-table thead th.col-us::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--g-mid), transparent);
+}
+
+.comp-table tbody tr td {
+  padding: .95rem 1.5rem;
+  font-size: .875rem; color: var(--t2);
+  border-bottom: 1px solid var(--border);
+  background: var(--s1);
+}
+.comp-table tbody tr:last-child td { border-bottom: none; }
+.comp-table tbody tr td:not(:first-child) { text-align: center; }
+.comp-table tbody tr td.col-us {
+  background: rgba(58,82,48,.25);
+}
+.comp-table tbody tr:hover td { background: var(--s2); }
+.comp-table tbody tr:hover td.col-us { background: rgba(58,82,48,.38); }
+
+.check-y { color: var(--g-bright); font-size: 1rem; font-weight: 700; }
+.check-n { color: var(--s4); font-size: .9rem; }
+
+/* ─── CTA ──────────────────────────────────────────────── */
+.cta-section {
+  margin: 0 1.5rem 1.5rem;
+  border-radius: var(--r-xl);
+  position: relative; overflow: hidden;
+  padding: 6rem 2rem;
+  text-align: center;
+  background: var(--s2);
+  border: 1px solid var(--border);
+}
+
+/* large glow orbs */
+.cta-section::before {
+  content: '';
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(92,122,72,.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-section::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .04; pointer-events: none;
+}
+
+.cta-inner { position: relative; z-index: 1; }
+.cta-section h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900; letter-spacing: -.045em; line-height: 1.05;
+  margin-bottom: .875rem; color: var(--t1);
+}
+.cta-section h2 span {
+  background: linear-gradient(135deg, var(--g-bright), var(--g-mid));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.cta-sub { font-size: 1rem; color: var(--t2); margin-bottom: 2.5rem; }
+.cta-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: .875rem; align-items: center; }
+
+
+/* ─── FOOTER ───────────────────────────────────────────── */
+footer {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 1rem;
+  padding: 1.75rem 2rem;
+  border-top: 1px solid var(--border);
+}
+.footer-brand { display: flex; align-items: center; gap: .5rem; text-decoration: none; }
+.footer-brand img { width: 1.5rem; height: 1.5rem; border-radius: .375rem; }
+.footer-brand-name { font-size: .875rem; font-weight: 700; color: var(--t1); }
+.footer-copy { font-size: .75rem; color: var(--t3); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-size: .8125rem; color: var(--t3); text-decoration: none;
+  transition: color .15s;
+}
+.footer-links a:hover { color: var(--t1); }
+
+/* ─── SCROLL REVEAL ────────────────────────────────────── */
+.reveal { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+.reveal.will-hide { opacity: 0; transform: translateY(28px); }
+.reveal.will-hide.shown { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 640px) {
+  .testimonials { padding: 4rem 1.25rem; }
+  .comparison-section { padding: 0 1.25rem 5rem; }
+  .cta-section { margin: 0 1rem 1rem; padding: 4rem 1.25rem; }
+  footer { flex-direction: column; align-items: flex-start; padding: 1.5rem 1.25rem; }
+  .comp-table thead th:not(:first-child) { width: 90px; }
+  .comp-table tbody tr td, .comp-table thead tr th { padding: .8rem .75rem; }
+  .feature-slide img { height: 420px; }
+}
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────── -->
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="logo.png" alt="Eats AI" />
+    <span class="nav-logo-text">Eats AI</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#compare">Compare</a>
+  </div>
+  <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="nav-cta" target="_blank" rel="noopener">Download Free</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-text reveal">
+    <div class="hero-badge">
+      <span class="badge-pulse"></span>
+      AI-powered nutrition
+    </div>
+
+    <h1>
+      <span class="h1-white">Eat Smarter.<br></span>
+      <span class="h1-green">Live Better.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Your all-in-one nutrition companion. Snap meals, manage your pantry,
+      generate personalized recipes, and hit your goals — designed for real life.
+    </p>
+
+    <div class="hero-actions">
+      <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="badge-link" target="_blank" rel="noopener">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="store-badge store-badge-apple" />
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" class="badge-link" target="_blank" rel="noopener">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="store-badge store-badge-play" />
+      </a>
+    </div>
+
+    <p class="hero-fine">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      7-day free trial &nbsp;·&nbsp; Cancel anytime
+    </p>
+  </div>
+
+  <div class="hero-visual reveal" style="transition-delay:.12s">
+    <div class="hero-phone">
+      <img src="hero-phone.png" alt="Eats AI app dashboard" loading="eager" />
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ───────────────────────────────────────────── -->
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
+    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- ── FEATURES ──────────────────────────────────────────── -->
+<section class="features-section" id="features">
+  <div class="features-header reveal">
+    <div class="eyebrow">The App</div>
+    <h2 class="section-title">Everything you need,<br>nothing you don't.</h2>
+    <p class="features-sub">Five powerful tools in one elegant app — built to actually fit how you eat and live.</p>
+  </div>
+
+  <div class="features-scroll-outer">
+    <div class="features-fade-l"></div>
+    <div class="features-fade-r"></div>
+    <div class="features-track">
+      <div class="feature-slide"><img src="feature-scan.jpg"   alt="Just snap it." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-pantry.jpg" alt="Stop throwing food away." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-cook.jpg"   alt="Dinner ideas from what you already own." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-plan.jpg"   alt="A whole week, planned in seconds." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-health.jpg" alt="Your wellness journey, visualized." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-scan.jpg"   alt="Just snap it." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-pantry.jpg" alt="Stop throwing food away." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-cook.jpg"   alt="Dinner ideas from what you already own." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-plan.jpg"   alt="A whole week, planned in seconds." loading="lazy" /></div>
+      <div class="feature-slide"><img src="feature-health.jpg" alt="Your wellness journey, visualized." loading="lazy" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ───────────────────────────────────────── -->
+<section class="testimonials" id="reviews">
+  <div class="testimonials-header reveal">
+    <div class="eyebrow">Reviews</div>
+    <h2 class="section-title">Real meals. Real wins.</h2>
+  </div>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">I'm at the gym 5 days a week and tracking macros used to be a full-time job. Now I snap my plate and it's done. Game changer.</p>
+      <div class="testi-person">
+        <img class="testi-avatar" src="avatar-diego.png" alt="Diego M." loading="lazy" />
+        <div><div class="testi-name">Diego M.</div><div class="testi-role">Lifter &amp; home cook</div></div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal" style="transition-delay:.08s">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">I cook for my whole family and used to waste so much produce. The pantry alerts have genuinely cut our grocery bill — and I feel less stressed.</p>
+      <div class="testi-person">
+        <img class="testi-avatar" src="avatar-karen.png" alt="Karen W." loading="lazy" />
+        <div><div class="testi-name">Karen W.</div><div class="testi-role">Mom of three</div></div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal" style="transition-delay:.16s">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">I'm 58 and not exactly techy, but this app is so simple. I just take a picture of dinner and it tells me everything. My doctor's thrilled.</p>
+      <div class="testi-person">
+        <img class="testi-avatar" src="avatar-linda.png" alt="Linda P." loading="lazy" />
+        <div><div class="testi-name">Linda P.</div><div class="testi-role">Retired teacher</div></div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal" style="transition-delay:.24s">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">I love that it builds recipes from what I already have. No more 9pm grocery runs. My weeknight dinners are actually fun again.</p>
+      <div class="testi-person">
+        <img class="testi-avatar" src="avatar-sofia.png" alt="Sofia G." loading="lazy" />
+        <div><div class="testi-name">Sofia G.</div><div class="testi-role">Grad student</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON ─────────────────────────────────────────── -->
+<section class="comparison-section" id="compare">
+  <div class="comparison-header reveal">
+    <div class="eyebrow">Comparison</div>
+    <h2 class="section-title">Why Eats AI wins</h2>
+    <p class="comparison-sub">vs. MyFitnessPal, Cronometer, and others</p>
+  </div>
+
+  <div class="reveal">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="col-us">Eats AI</th>
+          <th>Others</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>AI photo meal scanning</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>Voice meal logging</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>Smart pantry management</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>Auto recipe generation from pantry</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>Expiry tracking &amp; food waste savings</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>Money saved calculator</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>AI health report with grade</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+        <tr><td>Meal prep planner with shopping list</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <h2>Start eating<br><span>effortlessly.</span></h2>
+    <p class="cta-sub">Free 7-day trial. Cancel anytime. Available on iPhone &amp; Android.</p>
+    <div class="cta-btns">
+      <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="badge-link" target="_blank" rel="noopener">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="store-badge store-badge-apple" />
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" class="badge-link" target="_blank" rel="noopener">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="store-badge store-badge-play" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <a href="/" class="footer-brand">
+    <img src="logo.png" alt="Eats AI" />
+    <span class="footer-brand-name">Eats AI</span>
+  </a>
+  <p class="footer-copy">© 2026 Muppbury Holdings LLC</p>
+  <nav class="footer-links">
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="mailto:admin@eatsai.org">Contact</a>
+  </nav>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (el.getBoundingClientRect().top > window.innerHeight * 0.88) {
+      el.classList.add('will-hide');
+      io.observe(el);
+    }
+  });
+</script>
+</body>
+</html>
