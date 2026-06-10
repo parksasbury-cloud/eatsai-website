@@ -1053,6 +1053,10 @@ footer { border-top: 1px solid var(--border); margin-top: clamp(2rem, 4vh, 3rem)
 
     <div class="faq-list reveal">
       <details class="faq-item" open>
+        <summary>What is Eats AI?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Eats AI is an all-in-one AI nutrition app for iPhone and Android. Snap a photo of any meal to log calories and macros instantly, manage your pantry with expiry alerts, generate recipes from ingredients you already own, plan your week with automatic shopping lists, and get dish recommendations from restaurant menus near you. It comes with a 7-day free trial.</div>
+      </details>
+      <details class="faq-item">
         <summary>How does the free trial work?<span class="faq-plus">+</span></summary>
         <div class="faq-body">Every new account gets a 7-day free trial with full access to everything: AI scanning, recipes, meal plans, the works. No commitment: cancel anytime before the trial ends and you won't be charged.</div>
       </details>
@@ -1073,8 +1077,8 @@ footer { border-top: 1px solid var(--border); margin-top: clamp(2rem, 4vh, 3rem)
         <div class="faq-body">Yes. Set your goals, dietary style, and allergies once, and every generated recipe and meal plan respects them automatically.</div>
       </details>
       <details class="faq-item">
-        <summary>How is Eats AI different from other calorie trackers?<span class="faq-plus">+</span></summary>
-        <div class="faq-body">Most apps stop at logging what you ate. Eats AI covers the whole picture: photo and voice logging, a smart pantry with expiry alerts, recipes generated from what you own, weekly meal plans with shopping lists, and restaurant dish recommendations near you. One app instead of four.</div>
+        <summary>How is Eats AI different from Cal AI or MyFitnessPal?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Apps like Cal AI focus on photo calorie counting, and MyFitnessPal centers on database food logging. Eats AI covers the whole picture in one app: photo and voice logging, a smart pantry with expiry alerts, recipes generated from what you own, weekly meal plans with shopping lists, and restaurant dish recommendations near you.</div>
       </details>
       <details class="faq-item">
         <summary>How much does it cost after the trial?<span class="faq-plus">+</span></summary>
@@ -1129,6 +1133,11 @@ footer { border-top: 1px solid var(--border); margin-top: clamp(2rem, 4vh, 3rem)
         <h4>Download</h4>
         <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" target="_blank" rel="noopener">App Store</a>
         <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" target="_blank" rel="noopener">Google Play</a>
+      </div>
+      <div class="foot-col">
+        <h4>Guides</h4>
+        <a href="blog/best-ai-calorie-tracker-apps.html">Best AI calorie trackers</a>
+        <a href="blog/cal-ai-alternatives.html">Cal AI alternatives</a>
       </div>
       <div class="foot-col">
         <h4>Company</h4>
@@ -1192,19 +1201,43 @@ footer { border-top: 1px solid var(--border); margin-top: clamp(2rem, 4vh, 3rem)
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "@id": "https://eatsai.org/#org",
+      "name": "Muppbury Holdings LLC",
+      "url": "https://eatsai.org",
+      "logo": "https://eatsai.org/logo.png",
+      "email": "admin@eatsai.org"
+    },
+    {
+      "@type": "WebSite",
+      "name": "Eats AI",
+      "url": "https://eatsai.org",
+      "publisher": { "@id": "https://eatsai.org/#org" }
+    },
+    {
       "@type": "MobileApplication",
       "name": "Eats AI",
       "operatingSystem": "iOS, Android",
       "applicationCategory": "HealthApplication",
       "url": "https://eatsai.org",
+      "image": "https://eatsai.org/hero-app.jpg",
       "description": "All-in-one AI nutrition companion. Snap a photo to log calories and macros, manage your pantry, generate recipes, plan meals, and get restaurant dish recommendations near you.",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free download with 7-day free trial" },
       "installUrl": "https://apps.apple.com/us/app/eats-ai/id6759102367",
-      "publisher": { "@type": "Organization", "name": "Muppbury Holdings LLC" }
+      "sameAs": [
+        "https://apps.apple.com/us/app/eats-ai/id6759102367",
+        "https://play.google.com/store/apps/details?id=org.eatsai.apps"
+      ],
+      "publisher": { "@id": "https://eatsai.org/#org" }
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Eats AI?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Eats AI is an all-in-one AI nutrition app for iPhone and Android. Snap a photo of any meal to log calories and macros instantly, manage your pantry with expiry alerts, generate recipes from ingredients you already own, plan your week with automatic shopping lists, and get dish recommendations from restaurant menus near you. It comes with a 7-day free trial." }
+        },
         {
           "@type": "Question",
           "name": "How does the free trial work?",
@@ -1232,8 +1265,8 @@ footer { border-top: 1px solid var(--border); margin-top: clamp(2rem, 4vh, 3rem)
         },
         {
           "@type": "Question",
-          "name": "How is Eats AI different from other calorie trackers?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Most apps stop at logging what you ate. Eats AI covers the whole picture: photo and voice logging, a smart pantry with expiry alerts, recipes generated from what you own, weekly meal plans with shopping lists, and restaurant dish recommendations near you. One app instead of four." }
+          "name": "How is Eats AI different from Cal AI or MyFitnessPal?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Apps like Cal AI focus on photo calorie counting, and MyFitnessPal centers on database food logging. Eats AI covers the whole picture in one app: photo and voice logging, a smart pantry with expiry alerts, recipes generated from what you own, weekly meal plans with shopping lists, and restaurant dish recommendations near you." }
         },
         {
           "@type": "Question",
