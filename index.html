@@ -3,476 +3,664 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eats AI — Eat Smarter. Live Better.</title>
-  <meta name="description" content="Your all-in-one nutrition companion. Scan meals, manage your pantry, generate personalized recipes, and hit your health goals." />
+  <title>Eats AI | Eat Smarter. Live Better.</title>
+  <meta name="description" content="Snap a photo and Eats AI logs your calories and macros instantly, then plans your meals, builds recipes from your pantry, and even picks what to order at restaurants near you." />
+  <meta property="og:title" content="Eats AI | Eat Smarter. Live Better." />
+  <meta property="og:description" content="The all-in-one AI nutrition companion. Snap meals, manage your pantry, generate recipes, and get dish recommendations from restaurant menus near you." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://eatsai.org" />
+  <meta property="og:image" content="https://eatsai.org/hero-app.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://eatsai.org/" />
+  <link rel="icon" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="preload" as="image" href="hero-app.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
-  <link rel="icon" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,400..600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 
-  <style>
-/* ─── RESET ──────────────────────────────────────────── */
+<style>
+/* ════════════════════════════════════════════════════════════
+   RESET
+   ════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+img { display: block; max-width: 100%; }
 
-/* ─── TOKENS ─────────────────────────────────────────── */
+/* ════════════════════════════════════════════════════════════
+   TOKENS
+   ════════════════════════════════════════════════════════════ */
 :root {
-  /* Dark surfaces — slight warm green tint keeps it organic */
-  --bg:       #0B0D0A;
-  --s1:       #111410;
-  --s2:       #181C16;
-  --s3:       #1F241C;
-  --s4:       #272D23;
+  /* Dark organic surfaces */
+  --bg:   #0A0C09;
+  --s1:   #10130E;
+  --s2:   #161B13;
+  --s3:   #1D2418;
+  --s4:   #252E1F;
 
   /* Brand greens */
-  --g-bright: #B8CFA0;
-  --g-mid:    #8FA876;
+  --g-bright: #C3D9AC;
+  --g-mid:    #93AC79;
   --g-dark:   #5C7A48;
-  --g-deep:   #3A5230;
+  --g-deep:   #324528;
 
   /* Text */
-  --t1: #EEE9E0;   /* primary — warm off-white */
-  --t2: #9EA898;   /* secondary */
-  --t3: #5A6355;   /* muted */
+  --t1: #F0EBE2;
+  --t2: #A3AC9B;
+  --t3: #636D5C;
 
   /* Utility */
-  --border:  rgba(184,207,160,.10);
-  --glow:    rgba(143,168,118,.18);
-  --white:   #ffffff;
+  --border:    rgba(195,217,172,.09);
+  --border-hi: rgba(195,217,172,.18);
+  --glow:      rgba(147,172,121,.16);
+  --gold:      #D9C588;
+
   --r-sm: .625rem;
-  --r-md: 1rem;
-  --r-lg: 1.5rem;
-  --r-xl: 2rem;
+  --r-md: 1.125rem;
+  --r-lg: 1.625rem;
+  --r-xl: 2.25rem;
+
+  --font-sans:  'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+
+  --pad-x: clamp(1.25rem, 5vw, 4rem);
+  --maxw: 76rem;
 }
 
+::selection { background: var(--g-dark); color: #fff; }
+
 body {
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   background: var(--bg);
   color: var(--t1);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  line-height: 1.5;
 }
 
-/* noise grain overlay — premium texture */
+/* film grain */
 body::before {
   content: '';
-  position: fixed; inset: 0; z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: .028;
+  position: fixed; inset: 0; z-index: 50; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .03;
 }
 
-/* ─── NAV ─────────────────────────────────────────────── */
+.serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+/* ════════════════════════════════════════════════════════════
+   NAV
+   ════════════════════════════════════════════════════════════ */
 nav {
-  position: sticky; top: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: .875rem 2rem;
-  background: rgba(11,13,10,.82);
-  backdrop-filter: blur(20px) saturate(1.4);
+  padding: 1rem var(--pad-x);
+  transition: background .4s, border-color .4s, padding .4s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(10,12,9,.78);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom-color: var(--border);
+  padding: .7rem var(--pad-x);
 }
-.nav-logo { display: flex; align-items: center; gap: .55rem; text-decoration: none; }
-.nav-logo img { width: 1.875rem; height: 1.875rem; border-radius: .5rem; }
-.nav-logo-text { font-size: .9375rem; font-weight: 700; color: var(--t1); letter-spacing: -.02em; }
-.nav-links { display: flex; align-items: center; gap: 1.75rem; }
+.nav-logo { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+.nav-logo img { width: 2.1rem; height: 2.1rem; border-radius: .6rem; }
+.nav-logo-text { font-weight: 800; font-size: 1.1rem; color: var(--t1); letter-spacing: -0.02em; }
+.nav-links { display: flex; gap: 2.2rem; }
 .nav-links a {
-  font-size: .8125rem; font-weight: 500; color: var(--t3);
-  text-decoration: none; letter-spacing: .01em;
-  transition: color .15s;
+  color: var(--t2); text-decoration: none; font-size: .875rem; font-weight: 500;
+  transition: color .2s;
 }
-.nav-links a:hover { color: var(--t1); }
+.nav-links a:hover { color: var(--g-bright); }
 .nav-cta {
-  font-size: .8125rem; font-weight: 600;
-  padding: .5rem 1.125rem; border-radius: 100px;
-  background: var(--g-bright); color: var(--bg);
-  text-decoration: none; letter-spacing: -.01em;
-  transition: background .15s, transform .15s;
+  background: var(--g-bright); color: #15200D; text-decoration: none;
+  font-size: .875rem; font-weight: 700; letter-spacing: -0.01em;
+  padding: .6rem 1.25rem; border-radius: 99px;
+  transition: transform .2s, box-shadow .2s, background .2s;
+  box-shadow: 0 0 0 0 var(--glow);
 }
-.nav-cta:hover { background: var(--white); transform: translateY(-1px); }
+.nav-cta:hover { transform: translateY(-1px); background: #D5E8C0; box-shadow: 0 8px 28px var(--glow); }
 
-/* ─── HERO ─────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════════════════
+   HERO
+   ════════════════════════════════════════════════════════════ */
 .hero {
-  min-height: 94vh;
-  display: flex; align-items: center;
-  padding: 5rem 2rem 4rem;
-  max-width: 1200px; margin: 0 auto;
-  gap: 5rem;
   position: relative;
+  max-width: var(--maxw); margin: 0 auto;
+  padding: clamp(7.5rem, 14vh, 10rem) var(--pad-x) 0;
+  display: grid; grid-template-columns: 1.05fr .95fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  min-height: 92vh;
 }
-
-/* ambient glow behind phone */
+.hero::before {  /* ambient glow */
+  content: ''; position: absolute; top: -20%; left: -15%;
+  width: 65%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(92,122,72,.17) 0%, transparent 65%);
+  pointer-events: none;
+}
 .hero::after {
-  content: '';
-  position: absolute; right: 0; top: 50%;
-  transform: translateY(-50%);
-  width: 560px; height: 560px;
-  background: radial-gradient(ellipse, rgba(92,122,72,.28) 0%, transparent 70%);
-  pointer-events: none; z-index: 0;
-}
-
-.hero-text { flex: 1; min-width: 0; position: relative; z-index: 1; }
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .3rem .9rem .3rem .45rem;
-  border-radius: 100px;
-  background: rgba(184,207,160,.08);
-  border: 1px solid rgba(184,207,160,.2);
-  font-size: .6875rem; font-weight: 600;
-  letter-spacing: .1em; text-transform: uppercase; color: var(--g-bright);
-  margin-bottom: 2rem;
-}
-.badge-pulse {
-  width: .4375rem; height: .4375rem; border-radius: 50%;
-  background: var(--g-bright);
-  box-shadow: 0 0 0 0 rgba(184,207,160,.5);
-  animation: badgePulse 2.2s ease infinite;
-}
-@keyframes badgePulse {
-  0%   { box-shadow: 0 0 0 0 rgba(184,207,160,.5); }
-  70%  { box-shadow: 0 0 0 6px rgba(184,207,160,0); }
-  100% { box-shadow: 0 0 0 0 rgba(184,207,160,0); }
+  content: ''; position: absolute; bottom: -10%; right: -10%;
+  width: 55%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(92,122,72,.12) 0%, transparent 65%);
+  pointer-events: none;
 }
 
 .hero h1 {
-  font-size: clamp(3.25rem, 7vw, 5.5rem);
-  font-weight: 900; line-height: 1.02; letter-spacing: -.045em;
-  margin-bottom: 1.5rem;
+  font-size: clamp(3rem, 6.4vw, 5.2rem);
+  font-weight: 800; letter-spacing: -0.045em; line-height: .98;
+  margin-bottom: 1.6rem;
 }
-.h1-white { color: var(--t1); }
-.h1-green {
-  background: linear-gradient(135deg, var(--g-bright) 0%, var(--g-mid) 60%, #6b9050 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hero h1 .line2 {
+  display: block;
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  letter-spacing: -0.02em;
+  background: linear-gradient(100deg, var(--g-bright) 10%, var(--g-mid) 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-right: .1em;
 }
 
 .hero-sub {
-  font-size: 1.0625rem; line-height: 1.75; color: var(--t2);
-  max-width: 440px; margin-bottom: 2.25rem; font-weight: 400;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: var(--t2); line-height: 1.65; max-width: 33rem;
+  margin-bottom: 2.4rem;
 }
+.hero-sub strong { color: var(--t1); font-weight: 600; }
 
-.hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.5rem; align-items: center; }
-
-.badge-link {
-  display: inline-flex; align-items: center;
-  transition: transform .15s, opacity .15s;
-  text-decoration: none;
-}
-.badge-link:hover { transform: translateY(-2px); opacity: .88; }
-.store-badge { height: 44px; width: auto; display: block; }
-.store-badge-play { height: 64px; margin: -10px 0; }
-
-/* Apple badge: invert to white variant for dark background */
+.hero-actions { display: flex; gap: .9rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.5rem; }
+.badge-link { display: inline-block; transition: transform .25s cubic-bezier(.2,.7,.3,1.4), filter .25s; }
+.badge-link:hover { transform: translateY(-3px) scale(1.03); }
+.store-badge { height: 52px; width: auto; }
 .store-badge-apple { filter: invert(1); }
+.badge-link:hover .store-badge-apple { filter: invert(1) drop-shadow(0 6px 18px rgba(255,255,255,.12)); }
+.store-badge-play { height: 77px; margin: -12.5px 0; }
 
-.hero-fine {
-  display: flex; align-items: center; gap: .5rem;
-  font-size: .75rem; color: var(--t3);
+.hero-proof { display: flex; align-items: center; gap: .8rem; }
+.hero-stars { color: var(--gold); letter-spacing: .12em; font-size: .85rem; }
+.hero-proof-text { font-size: .85rem; color: var(--t3); font-weight: 500; }
+.hero-proof-text b { color: var(--t2); font-weight: 600; }
+
+/* phone */
+.hero-visual { position: relative; display: flex; justify-content: center; }
+.hero-phone { position: relative; animation: float 7s ease-in-out infinite; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
 }
-.hero-fine svg { color: var(--g-mid); }
-
-/* ─── HERO VISUAL ───────────────────────────────────────── */
-.hero-visual {
-  flex: 0 0 380px;
-  position: relative; z-index: 1;
-  display: flex; justify-content: center;
-}
-
-.hero-phone {
-  position: relative;
-  filter: drop-shadow(0 40px 80px rgba(0,0,0,.7)) drop-shadow(0 0 60px rgba(92,122,72,.25));
+.hero-phone::before { /* halo ring */
+  content: ''; position: absolute; inset: -12% -18%;
+  background: radial-gradient(closest-side, rgba(147,172,121,.22), transparent 72%);
+  z-index: -1;
 }
 .hero-phone img {
-  width: 100%; max-width: 340px;
-  border-radius: 2.5rem; display: block;
+  width: clamp(270px, 26vw, 360px);
+  border-radius: 2.6rem;
+  border: 1px solid rgba(195,217,172,.14);
+  filter: drop-shadow(0 50px 80px rgba(0,0,0,.7)) drop-shadow(0 0 60px rgba(92,122,72,.14));
 }
 
-@media (max-width: 900px) {
-  .hero { flex-direction: column; min-height: auto; padding-top: 3rem; gap: 3rem; }
-  .hero-visual { flex: none; width: 100%; max-width: 320px; }
-  .hero::after { display: none; }
-}
-@media (max-width: 640px) {
-  nav { padding: .75rem 1.25rem; }
-  .nav-links { display: none; }
-  .hero { padding: 2.5rem 1.25rem 3rem; }
-}
-
-/* ─── DIVIDER LINE ─────────────────────────────────────── */
-.hr { height: 1px; background: var(--border); margin: 0; }
-
-/* ─── MARQUEE ──────────────────────────────────────────── */
+/* ════════════════════════════════════════════════════════════
+   MARQUEE
+   ════════════════════════════════════════════════════════════ */
 .marquee-band {
-  overflow: hidden; user-select: none;
-  padding: 1.125rem 0;
-  background: var(--s1);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  margin-top: clamp(3rem, 7vh, 5rem);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 1.4rem 0; overflow: hidden; position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
-.marquee-track { display: flex; width: max-content; animation: marquee 24s linear infinite; }
-.marquee-track:hover { animation-play-state: paused; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.marquee-word {
-  font-size: .6875rem; font-weight: 800; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--t3);
-  padding: 0 1.25rem; white-space: nowrap;
-  transition: color .2s;
-}
-.marquee-sep {
-  display: flex; align-items: center;
-  font-size: .45rem; color: var(--g-dark);
-}
+.marquee-track { display: flex; width: max-content; animation: marquee 36s linear infinite; }
+.mq-group { display: flex; gap: 3rem; padding-right: 3rem; align-items: baseline; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.mq { font-size: 1.05rem; font-weight: 800; letter-spacing: .3em; color: var(--t3); text-transform: uppercase; }
+.mq.alt { font-family: var(--font-serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: .02em; font-size: 1.25rem; color: var(--g-mid); }
+.mq-dot { color: var(--g-deep); font-size: .8rem; align-self: center; }
 
-/* ─── SECTION HEADERS ──────────────────────────────────── */
+/* ════════════════════════════════════════════════════════════
+   SECTION SHARED
+   ════════════════════════════════════════════════════════════ */
+section { position: relative; }
+section[id] { scroll-margin-top: 4.5rem; }
+.shell { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad-x); }
 .eyebrow {
   display: inline-flex; align-items: center; gap: .5rem;
-  font-size: .6875rem; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase; color: var(--g-mid);
-  margin-bottom: .625rem;
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--g-mid); margin-bottom: 1.2rem;
 }
-.eyebrow::before {
-  content: ''; display: block;
-  width: 1.25rem; height: 1.5px;
-  background: var(--g-mid); border-radius: 2px;
-}
+.eyebrow::before { content: ''; width: 1.6rem; height: 1px; background: var(--g-dark); }
 .section-title {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
-  font-weight: 800; letter-spacing: -.04em; line-height: 1.1;
-  color: var(--t1);
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  font-weight: 800; letter-spacing: -0.04em; line-height: 1.04;
 }
+.section-title .serif {
+  background: linear-gradient(100deg, var(--g-bright), var(--g-mid));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-right: .08em;
+}
+.section-sub { color: var(--t2); font-size: 1.05rem; line-height: 1.65; max-width: 36rem; margin-top: 1.1rem; }
 
-/* ─── FEATURES ─────────────────────────────────────────── */
-.features-section {
-  padding: 6rem 0 0;
-  background: var(--bg);
+/* ════════════════════════════════════════════════════════════
+   HOW IT WORKS
+   ════════════════════════════════════════════════════════════ */
+.steps-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  margin-top: 3.2rem;
 }
-.features-header {
-  padding: 0 2rem 3.5rem;
-  text-align: center;
-}
-.features-sub {
-  font-size: 1rem; color: var(--t2); line-height: 1.7;
-  max-width: 480px; margin: .875rem auto 0;
-}
-
-.features-scroll-outer { position: relative; overflow: hidden; }
-.features-fade-l, .features-fade-r {
-  position: absolute; top: 0; bottom: 0; width: 14rem; z-index: 10; pointer-events: none;
-}
-.features-fade-l { left: 0;  background: linear-gradient(to right, var(--bg) 20%, transparent); }
-.features-fade-r { right: 0; background: linear-gradient(to left,  var(--bg) 20%, transparent); }
-
-.features-track {
-  display: flex;
-  animation: featScroll 36s linear infinite;
-  width: max-content;
-  padding: 1.5rem 0 3rem;
-}
-.features-track:hover { animation-play-state: paused; }
-@keyframes featScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-.feature-slide { padding: 0 .75rem; flex-shrink: 0; }
-.feature-slide img {
-  height: 540px; width: auto; display: block;
-  border-radius: 2.25rem;
-  /* no box-shadow — let the image speak; add subtle glow instead */
-  filter: drop-shadow(0 24px 48px rgba(0,0,0,.65));
-  transition: transform .35s cubic-bezier(.22,.68,0,1.2), filter .35s;
-}
-.feature-slide img:hover {
-  transform: translateY(-8px) scale(1.02);
-  filter: drop-shadow(0 36px 64px rgba(0,0,0,.7)) drop-shadow(0 0 32px rgba(143,168,118,.15));
-}
-
-/* ─── TESTIMONIALS ─────────────────────────────────────── */
-.testimonials {
-  padding: 7rem 2rem;
-  max-width: 1200px; margin: 0 auto;
-}
-.testimonials-header { margin-bottom: 3.5rem; }
-
-.testi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1px; /* gap is the border */
-  background: var(--border);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-}
-
-.testi-card {
-  background: var(--s1);
-  padding: 2rem;
-  display: flex; flex-direction: column; gap: 1.25rem;
-  transition: background .2s;
-}
-.testi-card:hover { background: var(--s2); }
-
-.testi-stars { display: flex; gap: .2rem; }
-.testi-star { color: var(--g-mid); font-size: .8rem; }
-
-.testi-quote {
-  font-size: .9375rem; line-height: 1.75;
-  color: var(--t2); flex: 1;
-  font-style: italic;
-}
-.testi-quote::before {
-  content: '\201C';
-  font-size: 2rem; line-height: 0; vertical-align: -.45em;
-  color: var(--g-dark); margin-right: .1rem;
-  font-style: normal;
-}
-
-.testi-person { display: flex; align-items: center; gap: .875rem; }
-.testi-avatar {
-  width: 2.5rem; height: 2.5rem; border-radius: 50%;
-  object-fit: cover; flex-shrink: 0;
-  border: 1.5px solid var(--s4);
-  filter: grayscale(20%);
-}
-.testi-name { font-size: .875rem; font-weight: 700; color: var(--t1); }
-.testi-role { font-size: .7rem; color: var(--t3); margin-top: .1rem; letter-spacing: .02em; }
-
-/* ─── COMPARISON ───────────────────────────────────────── */
-.comparison-section {
-  padding: 0 2rem 7rem;
-  max-width: 1000px; margin: 0 auto;
-}
-.comparison-header { margin-bottom: 2.5rem; }
-.comparison-sub { font-size: .875rem; color: var(--t3); margin-top: .5rem; }
-
-.comp-table {
-  width: 100%; border-collapse: separate; border-spacing: 0;
-  border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden;
-}
-
-.comp-table thead th {
-  padding: 1rem 1.5rem;
-  font-size: .6875rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--t3);
-  background: var(--s2);
-  border-bottom: 1px solid var(--border);
-}
-.comp-table thead th:first-child { text-align: left; border-radius: var(--r-lg) 0 0 0; }
-.comp-table thead th:not(:first-child) { text-align: center; width: 150px; }
-.comp-table thead th:last-child { border-radius: 0 var(--r-lg) 0 0; }
-.comp-table thead th.col-us {
-  background: var(--g-deep);
-  color: var(--g-bright);
-  position: relative;
-}
-/* "EATS AI" column glow line */
-.comp-table thead th.col-us::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--g-mid), transparent);
-}
-
-.comp-table tbody tr td {
-  padding: .95rem 1.5rem;
-  font-size: .875rem; color: var(--t2);
-  border-bottom: 1px solid var(--border);
-  background: var(--s1);
-}
-.comp-table tbody tr:last-child td { border-bottom: none; }
-.comp-table tbody tr td:not(:first-child) { text-align: center; }
-.comp-table tbody tr td.col-us {
-  background: rgba(58,82,48,.25);
-}
-.comp-table tbody tr:hover td { background: var(--s2); }
-.comp-table tbody tr:hover td.col-us { background: rgba(58,82,48,.38); }
-
-.check-y { color: var(--g-bright); font-size: 1rem; font-weight: 700; }
-.check-n { color: var(--s4); font-size: .9rem; }
-
-/* ─── CTA ──────────────────────────────────────────────── */
-.cta-section {
-  margin: 0 1.5rem 1.5rem;
-  border-radius: var(--r-xl);
+.step-card {
   position: relative; overflow: hidden;
-  padding: 6rem 2rem;
-  text-align: center;
-  background: var(--s2);
+  background: linear-gradient(160deg, var(--s2), var(--s1));
   border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 2.2rem 1.9rem 2rem;
+  transition: transform .35s cubic-bezier(.2,.7,.3,1.1), border-color .35s, box-shadow .35s;
 }
-
-/* large glow orbs */
-.cta-section::before {
-  content: '';
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px; height: 300px;
-  background: radial-gradient(ellipse, rgba(92,122,72,.35) 0%, transparent 70%);
+.step-card:hover { transform: translateY(-5px); border-color: var(--border-hi); box-shadow: 0 24px 48px rgba(0,0,0,.45); }
+.step-num {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 4.4rem; line-height: 1; color: transparent;
+  -webkit-text-stroke: 1px var(--g-dark);
+  margin-bottom: 1.3rem; opacity: .9;
+}
+.step-card h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: .6rem; }
+.step-card p { font-size: .92rem; color: var(--t2); line-height: 1.65; }
+.step-card::after {
+  content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 50%;
+  background: radial-gradient(circle at top right, rgba(147,172,121,.08), transparent 70%);
   pointer-events: none;
 }
-.cta-section::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: .04; pointer-events: none;
+
+/* ════════════════════════════════════════════════════════════
+   FEATURE CAROUSEL
+   ════════════════════════════════════════════════════════════ */
+.carousel-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.carousel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+
+.car-outer {
+  margin-top: 3rem; overflow: hidden; padding: 1.5rem 0 2.5rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.car-track { display: flex; width: max-content; animation: carScroll 100s linear infinite; }
+@keyframes carScroll { to { transform: translateX(-50%); } }
+.car-group { display: flex; gap: 1.7rem; padding-right: 1.7rem; }
+.car-slide { flex: none; }
+.car-slide img {
+  height: clamp(420px, 46vh, 560px); width: auto; border-radius: 2.1rem;
+  filter: drop-shadow(0 26px 50px rgba(0,0,0,.65));
+  transition: transform .4s cubic-bezier(.2,.7,.3,1.2), filter .4s;
+}
+.car-slide img:hover {
+  transform: translateY(-10px) scale(1.022);
+  filter: drop-shadow(0 40px 70px rgba(0,0,0,.72)) drop-shadow(0 0 36px rgba(147,172,121,.16));
 }
 
-.cta-inner { position: relative; z-index: 1; }
-.cta-section h2 {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 900; letter-spacing: -.045em; line-height: 1.05;
-  margin-bottom: .875rem; color: var(--t1);
+/* ════════════════════════════════════════════════════════════
+   DINING OUT SPOTLIGHT
+   ════════════════════════════════════════════════════════════ */
+.dine-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.dine-card-outer {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-xl);
+  background: linear-gradient(150deg, var(--s3), var(--s1) 65%);
+  padding: clamp(2.5rem, 5vw, 4.5rem);
+  display: grid; grid-template-columns: 1.05fr .95fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
 }
-.cta-section h2 span {
-  background: linear-gradient(135deg, var(--g-bright), var(--g-mid));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+.dine-card-outer::before {
+  content: ''; position: absolute; top: -30%; right: -10%;
+  width: 60%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(147,172,121,.16), transparent 72%);
+  pointer-events: none;
 }
-.cta-sub { font-size: 1rem; color: var(--t2); margin-bottom: 2.5rem; }
-.cta-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: .875rem; align-items: center; }
+.dine-eyebrow {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: linear-gradient(100deg, var(--g-bright), var(--g-mid));
+  color: #15200D; border-radius: 99px;
+  padding: .42rem 1rem;
+  font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+.dine-text h2 { margin-bottom: 1.1rem; }
+.dine-text .section-sub { margin-top: 0; margin-bottom: 1.8rem; }
+.dine-points { list-style: none; display: grid; gap: .85rem; margin-bottom: 2.2rem; }
+.dine-points li { display: flex; gap: .8rem; align-items: flex-start; font-size: .95rem; color: var(--t2); line-height: 1.55; }
+.dine-points .tick { flex: none; margin-top: .05rem; }
+.dine-cta {
+  display: inline-flex; align-items: center; gap: .55rem;
+  color: var(--g-bright); text-decoration: none;
+  font-size: .95rem; font-weight: 700;
+  border-bottom: 1px solid var(--g-deep);
+  padding-bottom: .2rem;
+  transition: gap .25s, border-color .25s;
+}
+.dine-cta:hover { gap: .9rem; border-color: var(--g-bright); }
 
+/* dining screenshot */
+.dine-visual { display: flex; justify-content: center; }
+.dine-shot {
+  width: clamp(250px, 22vw, 330px);
+  border-radius: 2.2rem;
+  border: 1px solid rgba(195,217,172,.16);
+  box-shadow: 0 36px 64px rgba(0,0,0,.55), 0 0 50px rgba(147,172,121,.1);
+}
 
-/* ─── FOOTER ───────────────────────────────────────────── */
-footer {
-  display: flex; flex-wrap: wrap; align-items: center;
-  justify-content: space-between; gap: 1rem;
-  padding: 1.75rem 2rem;
+/* ════════════════════════════════════════════════════════════
+   MID-PAGE CTA BAND
+   ════════════════════════════════════════════════════════════ */
+.mini-cta { padding: clamp(4.5rem, 9vh, 7rem) 0 0; }
+.mini-cta-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 2.6rem 0;
+}
+.mini-cta h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 800; letter-spacing: -0.03em; }
+.mini-cta h3 .serif { color: var(--g-mid); }
+.mini-cta p { font-size: .9rem; color: var(--t3); margin-top: .4rem; }
+.mini-cta-btns { display: flex; gap: .9rem; align-items: center; flex-wrap: wrap; }
+
+/* ════════════════════════════════════════════════════════════
+   STICKY DOWNLOAD BAR (mobile)
+   ════════════════════════════════════════════════════════════ */
+.dl-bar {
+  position: fixed; left: .75rem; right: .75rem; bottom: .75rem; z-index: 200;
+  display: none; align-items: center; justify-content: space-between; gap: 1rem;
+  background: rgba(16,19,14,.88);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--border-hi); border-radius: 1.25rem;
+  padding: .8rem .9rem .8rem 1.1rem;
+  box-shadow: 0 18px 44px rgba(0,0,0,.55);
+  transform: translateY(130%); opacity: 0;
+  transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s;
+}
+.dl-bar.show { transform: translateY(0); opacity: 1; }
+.dl-bar-brand { display: flex; align-items: center; gap: .7rem; }
+.dl-bar-brand img { width: 2.3rem; height: 2.3rem; border-radius: .7rem; }
+.dl-bar-name { font-size: .9rem; font-weight: 800; letter-spacing: -0.01em; }
+.dl-bar-sub { font-size: .72rem; color: var(--t3); font-weight: 500; }
+.dl-bar-btn {
+  flex: none; background: var(--g-bright); color: #15200D; text-decoration: none;
+  font-size: .85rem; font-weight: 800; letter-spacing: -0.01em;
+  padding: .75rem 1.3rem; border-radius: 99px;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BENTO GRID
+   ════════════════════════════════════════════════════════════ */
+.bento-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.bento {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem;
+  margin-top: 3.2rem;
+}
+.bcard {
+  position: relative; overflow: hidden;
+  background: linear-gradient(160deg, var(--s2), var(--s1));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 2rem 1.9rem;
+  display: flex; flex-direction: column; gap: .55rem;
+  transition: transform .35s cubic-bezier(.2,.7,.3,1.1), border-color .35s, box-shadow .35s;
+}
+.bcard:hover { transform: translateY(-5px); border-color: var(--border-hi); box-shadow: 0 26px 52px rgba(0,0,0,.45); }
+.b-span4 { grid-column: span 4; }
+.b-span3 { grid-column: span 3; }
+.b-span2 { grid-column: span 2; }
+
+.bicon {
+  width: 2.7rem; height: 2.7rem; border-radius: .85rem;
+  background: rgba(195,217,172,.08); border: 1px solid var(--border-hi);
+  display: grid; place-items: center; color: var(--g-bright);
+  margin-bottom: .9rem;
+}
+.bcard h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; }
+.bcard h3 .serif { color: var(--g-mid); }
+.bcard > p { font-size: .92rem; color: var(--t2); line-height: 1.65; max-width: 30rem; }
+
+/* mini UI vignette: scan result */
+.vignette {
+  margin-top: auto; padding-top: 1.6rem;
+}
+.scan-chip {
+  background: rgba(10,12,9,.65); border: 1px solid var(--border-hi);
+  border-radius: var(--r-md); padding: 1rem 1.15rem;
+  max-width: 24rem;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.scan-chip-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .8rem; }
+.scan-chip-name { font-size: .9rem; font-weight: 600; }
+.scan-chip-kcal { font-size: .9rem; font-weight: 800; color: var(--g-bright); }
+.macro-row { display: grid; grid-template-columns: 2.6rem 1fr 2.4rem; gap: .6rem; align-items: center; margin-bottom: .45rem; }
+.macro-row:last-child { margin-bottom: 0; }
+.macro-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; color: var(--t3); text-transform: uppercase; }
+.macro-bar { height: 5px; border-radius: 99px; background: var(--s4); overflow: hidden; }
+.macro-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--g-dark), var(--g-bright)); }
+.macro-val { font-size: .72rem; font-weight: 600; color: var(--t2); text-align: right; }
+
+/* mini UI vignette: pantry to recipe */
+.recipe-flow { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.pantry-chips { display: flex; gap: .4rem; flex-wrap: wrap; max-width: 15rem; }
+.p-chip {
+  font-size: .72rem; font-weight: 600; color: var(--t2);
+  border: 1px solid var(--border-hi); border-radius: 99px;
+  padding: .3rem .7rem; background: rgba(10,12,9,.5);
+}
+.flow-arrow { color: var(--g-mid); flex: none; }
+.recipe-out {
+  background: rgba(195,217,172,.09); border: 1px solid var(--border-hi);
+  border-radius: var(--r-md); padding: .8rem 1.05rem;
+}
+.recipe-out-label { font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g-mid); margin-bottom: .2rem; }
+.recipe-out-name { font-size: .88rem; font-weight: 700; color: var(--t1); }
+
+/* ════════════════════════════════════════════════════════════
+   TESTIMONIALS
+   ════════════════════════════════════════════════════════════ */
+.testi-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.testi-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+  margin-top: 3.2rem;
+}
+.testi-card {
+  position: relative;
+  background: linear-gradient(160deg, var(--s2), var(--s1));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 2.1rem 2rem 1.9rem;
+  transition: transform .35s cubic-bezier(.2,.7,.3,1.1), border-color .35s;
+}
+.testi-card:hover { transform: translateY(-4px); border-color: var(--border-hi); }
+.testi-mark {
+  font-family: var(--font-serif); font-style: italic;
+  position: absolute; top: 1rem; right: 1.6rem;
+  font-size: 5rem; line-height: 1; color: var(--g-deep); opacity: .55;
+  pointer-events: none;
+}
+.testi-stars { color: var(--gold); letter-spacing: .14em; font-size: .8rem; margin-bottom: 1rem; }
+.testi-quote { font-size: 1rem; line-height: 1.7; color: var(--t1); margin-bottom: 1.6rem; max-width: 30rem; }
+.testi-person { display: flex; align-items: center; gap: .85rem; }
+.testi-avatar { width: 2.7rem; height: 2.7rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--s4); }
+.testi-name { font-size: .9rem; font-weight: 700; }
+.testi-role { font-size: .78rem; color: var(--t3); }
+
+/* ════════════════════════════════════════════════════════════
+   COMPARISON
+   ════════════════════════════════════════════════════════════ */
+.compare-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.comp-wrap {
+  margin-top: 3.2rem;
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden;
+  background: linear-gradient(170deg, var(--s1), var(--bg));
+}
+.comp-table { width: 100%; border-collapse: collapse; }
+.comp-table th, .comp-table td { padding: 1.05rem 1.6rem; text-align: left; }
+.comp-table thead th {
+  font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--t3); border-bottom: 1px solid var(--border);
+  padding-top: 1.5rem; padding-bottom: 1.2rem;
+}
+.comp-table thead th.col-us {
+  color: #15200D;
+  background: linear-gradient(180deg, var(--g-bright), var(--g-mid));
+  text-align: center; font-size: .8rem; letter-spacing: .1em;
+}
+.comp-table thead th:last-child { text-align: center; }
+.comp-table tbody td { font-size: .92rem; color: var(--t2); border-bottom: 1px solid var(--border); }
+.comp-table tbody tr:last-child td { border-bottom: none; }
+.comp-table tbody tr { transition: background .2s; }
+.comp-table tbody tr:hover { background: rgba(195,217,172,.025); }
+.comp-table td.col-us { background: rgba(195,217,172,.05); text-align: center; }
+.comp-table td:last-child { text-align: center; }
+.tick {
+  display: inline-grid; place-items: center;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: rgba(195,217,172,.14); color: var(--g-bright);
+  font-size: .8rem; font-weight: 800;
+}
+.cross { color: var(--t3); font-size: .95rem; }
+
+/* ════════════════════════════════════════════════════════════
+   FAQ
+   ════════════════════════════════════════════════════════════ */
+.faq-section { padding: clamp(5rem, 11vh, 8rem) 0 0; }
+.faq-list { margin-top: 3rem; max-width: 50rem; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-item summary {
+  list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+  padding: 1.5rem .25rem;
+  font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em;
+  transition: color .2s;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--g-bright); }
+.faq-plus {
+  flex: none; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  border: 1px solid var(--border-hi); color: var(--g-mid);
+  display: grid; place-items: center; font-size: 1rem; font-weight: 400;
+  transition: transform .3s, background .3s, color .3s;
+}
+.faq-item[open] .faq-plus { transform: rotate(45deg); background: var(--g-bright); color: #15200D; border-color: var(--g-bright); }
+.faq-body { padding: 0 .25rem 1.6rem; font-size: .95rem; color: var(--t2); line-height: 1.7; max-width: 42rem; }
+.faq-body a { color: var(--g-mid); }
+
+/* ════════════════════════════════════════════════════════════
+   CTA
+   ════════════════════════════════════════════════════════════ */
+.cta-section { padding: clamp(6rem, 13vh, 9rem) 0 clamp(2rem, 4vh, 3rem); }
+.cta-card {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  background: linear-gradient(170deg, var(--s2), var(--s1) 60%);
+  padding: clamp(4rem, 9vh, 7rem) 2rem;
+  text-align: center;
+}
+.cta-card::before {
+  content: ''; position: absolute; top: -45%; left: 50%; transform: translateX(-50%);
+  width: 75%; aspect-ratio: 1.4; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(147,172,121,.2), transparent 75%);
+  pointer-events: none;
+}
+.cta-card h2 {
+  position: relative;
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  font-weight: 800; letter-spacing: -0.045em; line-height: .99;
+  margin-bottom: 1.4rem;
+}
+.cta-card h2 .serif {
+  display: block;
+  background: linear-gradient(100deg, var(--g-bright), var(--g-mid));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding: 0 .1em .08em;
+}
+.cta-sub { position: relative; color: var(--t2); font-size: 1.05rem; margin-bottom: 2.6rem; }
+.cta-btns { position: relative; display: flex; gap: .9rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+.cta-fine { position: relative; margin-top: 1.6rem; font-size: .8rem; color: var(--t3); }
+
+/* ════════════════════════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════════════════════════ */
+footer { border-top: 1px solid var(--border); margin-top: clamp(2rem, 4vh, 3rem); }
+.foot-inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 3rem var(--pad-x) 2.2rem;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 3rem; flex-wrap: wrap;
+}
+.foot-brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+.foot-brand img { width: 2rem; height: 2rem; border-radius: .55rem; }
+.foot-brand span { font-weight: 800; color: var(--t1); letter-spacing: -0.02em; }
+.foot-tag { margin-top: .9rem; font-size: .85rem; color: var(--t3); max-width: 16rem; line-height: 1.6; }
+.foot-cols { display: flex; gap: clamp(2.5rem, 6vw, 5.5rem); }
+.foot-col h4 { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--t3); margin-bottom: 1rem; }
+.foot-col a { display: block; color: var(--t2); text-decoration: none; font-size: .88rem; margin-bottom: .6rem; transition: color .2s; }
+.foot-col a:hover { color: var(--g-bright); }
+.foot-bottom {
   border-top: 1px solid var(--border);
+  max-width: var(--maxw); margin: 0 auto; padding: 1.4rem var(--pad-x);
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+  font-size: .78rem; color: var(--t3);
 }
-.footer-brand { display: flex; align-items: center; gap: .5rem; text-decoration: none; }
-.footer-brand img { width: 1.5rem; height: 1.5rem; border-radius: .375rem; }
-.footer-brand-name { font-size: .875rem; font-weight: 700; color: var(--t1); }
-.footer-copy { font-size: .75rem; color: var(--t3); }
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-links a {
-  font-size: .8125rem; color: var(--t3); text-decoration: none;
-  transition: color .15s;
-}
-.footer-links a:hover { color: var(--t1); }
 
-/* ─── SCROLL REVEAL ────────────────────────────────────── */
-.reveal { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
-.reveal.will-hide { opacity: 0; transform: translateY(28px); }
+/* ════════════════════════════════════════════════════════════
+   REVEAL + MOTION
+   ════════════════════════════════════════════════════════════ */
+.reveal { transition: opacity .8s cubic-bezier(.2,.6,.2,1), transform .8s cubic-bezier(.2,.6,.2,1); }
+.reveal.will-hide { opacity: 0; transform: translateY(26px); }
 .reveal.will-hide.shown { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 640px) {
-  .testimonials { padding: 4rem 1.25rem; }
-  .comparison-section { padding: 0 1.25rem 5rem; }
-  .cta-section { margin: 0 1rem 1rem; padding: 4rem 1.25rem; }
-  footer { flex-direction: column; align-items: flex-start; padding: 1.5rem 1.25rem; }
-  .comp-table thead th:not(:first-child) { width: 90px; }
-  .comp-table tbody tr td, .comp-table thead tr th { padding: .8rem .75rem; }
-  .feature-slide img { height: 420px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
 }
-  </style>
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: unset; text-align: center; padding-top: 7rem; gap: 3.5rem; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-actions, .hero-proof { justify-content: center; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .bento { grid-template-columns: 1fr; }
+  .b-span4, .b-span3, .b-span2 { grid-column: span 1; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .foot-inner { flex-direction: column; gap: 2.4rem; }
+  .dine-card-outer { grid-template-columns: 1fr; }
+  .mini-cta-inner { flex-direction: column; text-align: center; }
+  .dl-bar { display: flex; }
+  footer { padding-bottom: 5.5rem; }
+}
+@media (max-width: 640px) {
+  .store-badge { height: 46px; }
+  .store-badge-play { height: 68px; margin: -11px 0; }
+  .comp-table th, .comp-table td { padding: .85rem .8rem; font-size: .82rem; }
+  .comp-table thead th { font-size: .62rem; }
+  .car-slide img { height: 400px; }
+  .cta-card { padding-left: 1.4rem; padding-right: 1.4rem; }
+}
+</style>
 </head>
 <body>
 
 <!-- ── NAV ──────────────────────────────────────────────── -->
-<nav>
+<nav id="nav">
   <a href="/" class="nav-logo">
     <img src="logo.png" alt="Eats AI" />
     <span class="nav-logo-text">Eats AI</span>
   </a>
   <div class="nav-links">
+    <a href="#how">How it works</a>
     <a href="#features">Features</a>
+    <a href="#dining">Dining out</a>
     <a href="#reviews">Reviews</a>
-    <a href="#compare">Compare</a>
+    <a href="#faq">FAQ</a>
   </div>
   <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="nav-cta" target="_blank" rel="noopener">Download Free</a>
 </nav>
@@ -480,19 +668,15 @@ footer {
 <!-- ── HERO ─────────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-text reveal">
-    <div class="hero-badge">
-      <span class="badge-pulse"></span>
-      AI-powered nutrition
-    </div>
-
     <h1>
-      <span class="h1-white">Eat Smarter.<br></span>
-      <span class="h1-green">Live Better.</span>
+      Eat smarter.
+      <span class="line2">Live better.</span>
     </h1>
 
     <p class="hero-sub">
-      Your all-in-one nutrition companion. Snap meals, manage your pantry,
-      generate personalized recipes, and hit your goals — designed for real life.
+      Snap a photo and Eats AI logs your <strong>calories and macros instantly</strong>,
+      then plans your meals, builds recipes from your pantry, and even picks
+      <strong>what to order at restaurants near you</strong>.
     </p>
 
     <div class="hero-actions">
@@ -504,15 +688,15 @@ footer {
       </a>
     </div>
 
-    <p class="hero-fine">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      7-day free trial &nbsp;·&nbsp; Cancel anytime
-    </p>
+    <div class="hero-proof">
+      <span class="hero-stars">★★★★★</span>
+      <span class="hero-proof-text"><b>5-star rated on the App Store</b> · 7-day free trial · cancel anytime</span>
+    </div>
   </div>
 
   <div class="hero-visual reveal" style="transition-delay:.12s">
     <div class="hero-phone">
-      <img src="hero-phone.png" alt="Eats AI app dashboard" loading="eager" />
+      <img src="hero-app.jpg" alt="Eats AI home dashboard showing daily calories, macros, and weekly progress" loading="eager" fetchpriority="high" />
     </div>
   </div>
 </section>
@@ -520,167 +704,478 @@ footer {
 <!-- ── MARQUEE ───────────────────────────────────────────── -->
 <div class="marquee-band" aria-hidden="true">
   <div class="marquee-track">
-    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">TRACK</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">PLAN</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">THRIVE</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">SNAP</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">LOG</span><span class="marquee-sep">✦</span>
-    <span class="marquee-word">BURN</span><span class="marquee-sep">✦</span>
+    <div class="mq-group">
+      <span class="mq">Snap</span><span class="mq-dot">✦</span>
+      <span class="mq alt">track</span><span class="mq-dot">✦</span>
+      <span class="mq">Plan</span><span class="mq-dot">✦</span>
+      <span class="mq alt">cook</span><span class="mq-dot">✦</span>
+      <span class="mq">Dine out</span><span class="mq-dot">✦</span>
+      <span class="mq alt">save</span><span class="mq-dot">✦</span>
+      <span class="mq">Thrive</span><span class="mq-dot">✦</span>
+      <span class="mq">Snap</span><span class="mq-dot">✦</span>
+      <span class="mq alt">track</span><span class="mq-dot">✦</span>
+      <span class="mq">Plan</span><span class="mq-dot">✦</span>
+      <span class="mq alt">cook</span><span class="mq-dot">✦</span>
+      <span class="mq">Dine out</span><span class="mq-dot">✦</span>
+      <span class="mq alt">save</span><span class="mq-dot">✦</span>
+      <span class="mq">Thrive</span><span class="mq-dot">✦</span>
+    </div>
+    <div class="mq-group">
+      <span class="mq">Snap</span><span class="mq-dot">✦</span>
+      <span class="mq alt">track</span><span class="mq-dot">✦</span>
+      <span class="mq">Plan</span><span class="mq-dot">✦</span>
+      <span class="mq alt">cook</span><span class="mq-dot">✦</span>
+      <span class="mq">Dine out</span><span class="mq-dot">✦</span>
+      <span class="mq alt">save</span><span class="mq-dot">✦</span>
+      <span class="mq">Thrive</span><span class="mq-dot">✦</span>
+      <span class="mq">Snap</span><span class="mq-dot">✦</span>
+      <span class="mq alt">track</span><span class="mq-dot">✦</span>
+      <span class="mq">Plan</span><span class="mq-dot">✦</span>
+      <span class="mq alt">cook</span><span class="mq-dot">✦</span>
+      <span class="mq">Dine out</span><span class="mq-dot">✦</span>
+      <span class="mq alt">save</span><span class="mq-dot">✦</span>
+      <span class="mq">Thrive</span><span class="mq-dot">✦</span>
+    </div>
   </div>
 </div>
 
-<!-- ── FEATURES ──────────────────────────────────────────── -->
-<section class="features-section" id="features">
-  <div class="features-header reveal">
-    <div class="eyebrow">The App</div>
-    <h2 class="section-title">Everything you need,<br>nothing you don't.</h2>
-    <p class="features-sub">Five powerful tools in one elegant app — built to actually fit how you eat and live.</p>
-  </div>
-
-  <div class="features-scroll-outer">
-    <div class="features-fade-l"></div>
-    <div class="features-fade-r"></div>
-    <div class="features-track">
-      <div class="feature-slide"><img src="feature-scan.jpg"   alt="Just snap it." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-pantry.jpg" alt="Stop throwing food away." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-cook.jpg"   alt="Dinner ideas from what you already own." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-plan.jpg"   alt="A whole week, planned in seconds." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-health.jpg" alt="Your wellness journey, visualized." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-scan.jpg"   alt="Just snap it." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-pantry.jpg" alt="Stop throwing food away." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-cook.jpg"   alt="Dinner ideas from what you already own." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-plan.jpg"   alt="A whole week, planned in seconds." loading="lazy" /></div>
-      <div class="feature-slide"><img src="feature-health.jpg" alt="Your wellness journey, visualized." loading="lazy" /></div>
+<!-- ── HOW IT WORKS ──────────────────────────────────────── -->
+<section class="steps-section" id="how">
+  <div class="shell">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2 class="section-title">Hit your goals in <span class="serif">one, two, three.</span></h2>
     </div>
-  </div>
-</section>
 
-<!-- ── TESTIMONIALS ───────────────────────────────────────── -->
-<section class="testimonials" id="reviews">
-  <div class="testimonials-header reveal">
-    <div class="eyebrow">Reviews</div>
-    <h2 class="section-title">Real meals. Real wins.</h2>
-  </div>
-
-  <div class="testi-grid">
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">I'm at the gym 5 days a week and tracking macros used to be a full-time job. Now I snap my plate and it's done. Game changer.</p>
-      <div class="testi-person">
-        <img class="testi-avatar" src="avatar-diego.png" alt="Diego M." loading="lazy" />
-        <div><div class="testi-name">Diego M.</div><div class="testi-role">Lifter &amp; home cook</div></div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <h3>Snap your meal</h3>
+        <p>Point, shoot, done. The AI identifies your food and portion sizes in seconds. No database searching, no guesswork. You can even log by voice.</p>
       </div>
-    </div>
-
-    <div class="testi-card reveal" style="transition-delay:.08s">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">I cook for my whole family and used to waste so much produce. The pantry alerts have genuinely cut our grocery bill — and I feel less stressed.</p>
-      <div class="testi-person">
-        <img class="testi-avatar" src="avatar-karen.png" alt="Karen W." loading="lazy" />
-        <div><div class="testi-name">Karen W.</div><div class="testi-role">Mom of three</div></div>
+      <div class="step-card reveal" style="transition-delay:.08s">
+        <div class="step-num">02</div>
+        <h3>Get the full picture</h3>
+        <p>Calories, protein, carbs, and fat are logged instantly and tracked against your personal targets, with a weekly AI health report that grades your progress.</p>
       </div>
-    </div>
-
-    <div class="testi-card reveal" style="transition-delay:.16s">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">I'm 58 and not exactly techy, but this app is so simple. I just take a picture of dinner and it tells me everything. My doctor's thrilled.</p>
-      <div class="testi-person">
-        <img class="testi-avatar" src="avatar-linda.png" alt="Linda P." loading="lazy" />
-        <div><div class="testi-name">Linda P.</div><div class="testi-role">Retired teacher</div></div>
-      </div>
-    </div>
-
-    <div class="testi-card reveal" style="transition-delay:.24s">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">I love that it builds recipes from what I already have. No more 9pm grocery runs. My weeknight dinners are actually fun again.</p>
-      <div class="testi-person">
-        <img class="testi-avatar" src="avatar-sofia.png" alt="Sofia G." loading="lazy" />
-        <div><div class="testi-name">Sofia G.</div><div class="testi-role">Grad student</div></div>
+      <div class="step-card reveal" style="transition-delay:.16s">
+        <div class="step-num">03</div>
+        <h3>Eat better, anywhere</h3>
+        <p>Eats AI plans your week, builds recipes from your pantry, and recommends dishes at restaurants near you, so you stay on track at home and when eating out.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── COMPARISON ─────────────────────────────────────────── -->
-<section class="comparison-section" id="compare">
-  <div class="comparison-header reveal">
-    <div class="eyebrow">Comparison</div>
-    <h2 class="section-title">Why Eats AI wins</h2>
-    <p class="comparison-sub">vs. MyFitnessPal, Cronometer, and others</p>
+<!-- ── FEATURE CAROUSEL ──────────────────────────────────── -->
+<section class="carousel-section" id="features">
+  <div class="shell">
+    <div class="carousel-head reveal">
+      <div>
+        <div class="eyebrow">The app</div>
+        <h2 class="section-title">Everything you need,<br><span class="serif">nothing you don't.</span></h2>
+      </div>
+    </div>
   </div>
 
-  <div class="reveal">
-    <table class="comp-table">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th class="col-us">Eats AI</th>
-          <th>Others</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>AI photo meal scanning</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>Voice meal logging</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>Smart pantry management</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>Auto recipe generation from pantry</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>Expiry tracking &amp; food waste savings</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>Money saved calculator</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>AI health report with grade</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-        <tr><td>Meal prep planner with shopping list</td><td class="col-us check-y">✓</td><td class="check-n">✗</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ── CTA ────────────────────────────────────────────────── -->
-<section class="cta-section">
-  <div class="cta-inner reveal">
-    <h2>Start eating<br><span>effortlessly.</span></h2>
-    <p class="cta-sub">Free 7-day trial. Cancel anytime. Available on iPhone &amp; Android.</p>
-    <div class="cta-btns">
-      <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="badge-link" target="_blank" rel="noopener">
-        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="store-badge store-badge-apple" />
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" class="badge-link" target="_blank" rel="noopener">
-        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="store-badge store-badge-play" />
-      </a>
+  <div class="car-outer">
+    <div class="car-track">
+      <div class="car-group">
+        <div class="car-slide"><img src="app-home.jpg"     alt="Home dashboard with daily calories and macros at a glance" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-dining.jpg"   alt="Dining screen with intelligent restaurant recommendations near you" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-cooking.jpg"  alt="Cooking screen with AI-generated recipes matched to your macros" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-pantry.jpg"   alt="Pantry screen tracking ingredients and expiry dates" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-health.jpg"   alt="Health screen with weight, BMI, and streaks" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-activity.jpg" alt="Activity screen with steps and calories burned" loading="lazy" /></div>
+      </div>
+      <div class="car-group" aria-hidden="true">
+        <div class="car-slide"><img src="app-home.jpg"     alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-dining.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-cooking.jpg"  alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-pantry.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-health.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-activity.jpg" alt="" loading="lazy" /></div>
+      </div>
+      <div class="car-group" aria-hidden="true">
+        <div class="car-slide"><img src="app-home.jpg"     alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-dining.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-cooking.jpg"  alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-pantry.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-health.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-activity.jpg" alt="" loading="lazy" /></div>
+      </div>
+      <div class="car-group" aria-hidden="true">
+        <div class="car-slide"><img src="app-home.jpg"     alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-dining.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-cooking.jpg"  alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-pantry.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-health.jpg"   alt="" loading="lazy" /></div>
+        <div class="car-slide"><img src="app-activity.jpg" alt="" loading="lazy" /></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<!-- ── DINING OUT, ONE OF A KIND ────────────────────────── -->
+<section class="dine-section" id="dining">
+  <div class="shell">
+    <div class="dine-card-outer reveal">
+      <div class="dine-text">
+        <div class="dine-eyebrow">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z"/></svg>
+          One of a kind
+        </div>
+        <h2 class="section-title">Eating out?<br><span class="serif">Still on track.</span></h2>
+        <p class="section-sub">No other nutrition app does this: Eats AI analyzes your goals, reads the menus of restaurants near you, and recommends the exact dishes you'll love, all fitting your targets.</p>
+        <ul class="dine-points">
+          <li><span class="tick">✓</span>Scans specific menu items from restaurants around you</li>
+          <li><span class="tick">✓</span>Matches dishes to your macros, allergies, and taste</li>
+          <li><span class="tick">✓</span>Tells you exactly why each recommendation fits your goals</li>
+        </ul>
+        <a class="dine-cta" href="#download">Try it free for 7 days
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="dine-visual">
+        <img class="dine-shot" src="app-dining.jpg" alt="Eats AI Dining screen showing intelligent restaurant recommendations with match scores" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENTO FEATURES ────────────────────────────────────── -->
+<section class="bento-section">
+  <div class="shell">
+    <div class="reveal">
+      <div class="eyebrow">Features</div>
+      <h2 class="section-title">One app. <span class="serif">Every meal, handled.</span></h2>
+      <p class="section-sub">Most apps stop at counting calories. Eats AI manages the whole life of your food, from grocery bag to plate to progress report.</p>
+    </div>
+
+    <div class="bento">
+      <!-- scan, large -->
+      <div class="bcard b-span4 reveal">
+        <div class="bicon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.5"/></svg>
+        </div>
+        <h3>AI photo scanning</h3>
+        <p>One photo replaces ten minutes of searching food databases. The AI recognizes the dish, estimates portions, and logs everything, even mixed plates and homemade meals.</p>
+        <div class="vignette">
+          <div class="scan-chip">
+            <div class="scan-chip-top">
+              <span class="scan-chip-name">Salmon poke bowl</span>
+              <span class="scan-chip-kcal">540 kcal</span>
+            </div>
+            <div class="macro-row"><span class="macro-label">Prot</span><div class="macro-bar"><div class="macro-fill" style="width:78%"></div></div><span class="macro-val">42g</span></div>
+            <div class="macro-row"><span class="macro-label">Carb</span><div class="macro-bar"><div class="macro-fill" style="width:55%"></div></div><span class="macro-val">48g</span></div>
+            <div class="macro-row"><span class="macro-label">Fat</span><div class="macro-bar"><div class="macro-fill" style="width:38%"></div></div><span class="macro-val">18g</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- voice -->
+      <div class="bcard b-span2 reveal" style="transition-delay:.06s">
+        <div class="bicon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg>
+        </div>
+        <h3>Voice logging</h3>
+        <p>Hands full? Just say what you ate, like "two eggs and toast with butter", and it's logged with full macros.</p>
+      </div>
+
+      <!-- pantry -->
+      <div class="bcard b-span2 reveal">
+        <div class="bicon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 3h16v18H4zM4 9h16M4 15h16M9 6h.01M9 12h.01M9 18h.01"/></svg>
+        </div>
+        <h3>Smart pantry</h3>
+        <p>Track everything you own and get an alert before it expires. Less waste, lower grocery bills. The app even tallies the money you save.</p>
+      </div>
+
+      <!-- recipes, large -->
+      <div class="bcard b-span4 reveal" style="transition-delay:.06s">
+        <div class="bicon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3c-1.8 2-6 2.5-6 7a6 6 0 0 0 12 0c0-4.5-4.2-5-6-7z"/><path d="M12 21v-4"/></svg>
+        </div>
+        <h3>Recipes from <span class="serif">your</span> kitchen</h3>
+        <p>No more 9pm grocery runs. Tell Eats AI what's in your fridge and it generates personalized recipes around your goals, allergies, and taste.</p>
+        <div class="vignette">
+          <div class="recipe-flow">
+            <div class="pantry-chips">
+              <span class="p-chip">chicken thighs</span>
+              <span class="p-chip">spinach</span>
+              <span class="p-chip">rice</span>
+              <span class="p-chip">lemon</span>
+            </div>
+            <svg class="flow-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <div class="recipe-out">
+              <div class="recipe-out-label">Generated recipe</div>
+              <div class="recipe-out-name">Lemon chicken &amp; spinach rice bowl</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- meal prep -->
+      <div class="bcard b-span3 reveal">
+        <div class="bicon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>Meal prep planner</h3>
+        <p>A whole week planned in seconds, balanced to your targets, with the shopping list built automatically.</p>
+      </div>
+
+      <!-- health report -->
+      <div class="bcard b-span3 reveal" style="transition-delay:.06s">
+        <div class="bicon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>AI health report</h3>
+        <p>A weekly grade, not a guilt trip. See trends across calories, macros, and habits, plus exactly one thing to improve next week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MID CTA ───────────────────────────────────────────── -->
+<section class="mini-cta">
+  <div class="shell">
+    <div class="mini-cta-inner reveal">
+      <div>
+        <h3>Your next meal could <span class="serif">log itself.</span></h3>
+        <p>Free for 7 days · no commitment · cancel anytime</p>
+      </div>
+      <div class="mini-cta-btns">
+        <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="badge-link" target="_blank" rel="noopener">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="store-badge store-badge-apple" />
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" class="badge-link" target="_blank" rel="noopener">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="store-badge store-badge-play" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ──────────────────────────────────────── -->
+<section class="testi-section" id="reviews">
+  <div class="shell">
+    <div class="reveal">
+      <div class="eyebrow">Reviews</div>
+      <h2 class="section-title">Real meals. <span class="serif">Real wins.</span></h2>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-mark">”</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">I'm at the gym 5 days a week and tracking macros used to be a full-time job. Now I snap my plate and it's done. Game changer.</p>
+        <div class="testi-person">
+          <img class="testi-avatar" src="avatar-diego.png" alt="Diego M." loading="lazy" />
+          <div><div class="testi-name">Diego M.</div><div class="testi-role">Lifter &amp; home cook</div></div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal" style="transition-delay:.08s">
+        <div class="testi-mark">”</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">I cook for my whole family and used to waste so much produce. The pantry alerts have genuinely cut our grocery bill, and I feel less stressed.</p>
+        <div class="testi-person">
+          <img class="testi-avatar" src="avatar-karen.png" alt="Karen W." loading="lazy" />
+          <div><div class="testi-name">Karen W.</div><div class="testi-role">Mom of three</div></div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-mark">”</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">I'm 58 and not exactly techy, but this app is so simple. I just take a picture of dinner and it tells me everything. My doctor's thrilled.</p>
+        <div class="testi-person">
+          <img class="testi-avatar" src="avatar-linda.png" alt="Linda P." loading="lazy" />
+          <div><div class="testi-name">Linda P.</div><div class="testi-role">Retired teacher</div></div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal" style="transition-delay:.08s">
+        <div class="testi-mark">”</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">I love that it builds recipes from what I already have. No more 9pm grocery runs. My weeknight dinners are actually fun again.</p>
+        <div class="testi-person">
+          <img class="testi-avatar" src="avatar-sofia.png" alt="Sofia G." loading="lazy" />
+          <div><div class="testi-name">Sofia G.</div><div class="testi-role">Grad student</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON ────────────────────────────────────────── -->
+<section class="compare-section" id="compare">
+  <div class="shell">
+    <div class="reveal">
+      <div class="eyebrow">Comparison</div>
+      <h2 class="section-title">Why Eats AI <span class="serif">wins.</span></h2>
+      <p class="section-sub">Calorie counters track what you ate. Eats AI also handles what you'll eat next, and what's sitting in your fridge right now.</p>
+    </div>
+
+    <div class="comp-wrap reveal">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="col-us">Eats AI</th>
+            <th>Typical trackers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Restaurant dish recommendations near you</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>AI photo meal scanning</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Voice meal logging</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Smart pantry management</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Recipes generated from your pantry</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Expiry tracking &amp; food-waste savings</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Money-saved calculator</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>AI health report with grade</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Meal prep planner with shopping list</td><td class="col-us"><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ───────────────────────────────────────────────── -->
+<section class="faq-section" id="faq">
+  <div class="shell">
+    <div class="reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="section-title">Questions, <span class="serif">answered.</span></h2>
+    </div>
+
+    <div class="faq-list reveal">
+      <details class="faq-item" open>
+        <summary>How does the free trial work?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Every new account gets a 7-day free trial with full access to everything: AI scanning, recipes, meal plans, the works. No commitment: cancel anytime before the trial ends and you won't be charged.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How accurate is the AI photo scanning?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">The AI recognizes thousands of foods and estimates portions from a single photo, and you can always adjust anything before saving. Estimates are for general wellness. If you have allergies or strict medical requirements, always verify ingredients independently.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can it help me when I'm eating out?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Yes, and this is where Eats AI is truly one of a kind. It analyzes your goals and taste profile, reads the menus of restaurants near you, and recommends the specific dishes that fit. No more guessing at the table.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is it available on iPhone and Android?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Yes. Eats AI is on the <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" target="_blank" rel="noopener">App Store</a> and <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" target="_blank" rel="noopener">Google Play</a>.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can it handle my dietary preferences and allergies?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Yes. Set your goals, dietary style, and allergies once, and every generated recipe and meal plan respects them automatically.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How is Eats AI different from other calorie trackers?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Most apps stop at logging what you ate. Eats AI covers the whole picture: photo and voice logging, a smart pantry with expiry alerts, recipes generated from what you own, weekly meal plans with shopping lists, and restaurant dish recommendations near you. One app instead of four.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How much does it cost after the trial?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">Eats AI is free to download with a 7-day free trial of everything. After that, an affordable subscription unlocks full access. Current pricing is shown in the app and on the App Store and Google Play, and you can cancel anytime in seconds.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you sell my data?<span class="faq-plus">+</span></summary>
+        <div class="faq-body">No. We never sell your personal data, and you can delete your account and all your data at any time from inside the app. Details in our <a href="privacy.html">Privacy Policy</a>.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="cta-section" id="download">
+  <div class="shell">
+    <div class="cta-card reveal">
+      <h2>Start eating<span class="serif">effortlessly.</span></h2>
+      <p class="cta-sub">Join Eats AI today, free for 7 days on iPhone &amp; Android.</p>
+      <div class="cta-btns">
+        <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" class="badge-link" target="_blank" rel="noopener">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="store-badge store-badge-apple" />
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" class="badge-link" target="_blank" rel="noopener">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="store-badge store-badge-play" />
+        </a>
+      </div>
+      <p class="cta-fine"><span class="hero-stars">★★★★★</span> &nbsp;5-star rated on the App Store · No commitment · Cancel anytime</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────────── -->
 <footer>
-  <a href="/" class="footer-brand">
-    <img src="logo.png" alt="Eats AI" />
-    <span class="footer-brand-name">Eats AI</span>
-  </a>
-  <p class="footer-copy">© 2026 Muppbury Holdings LLC</p>
-  <nav class="footer-links">
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-    <a href="mailto:admin@eatsai.org">Contact</a>
-  </nav>
+  <div class="foot-inner">
+    <div>
+      <a href="/" class="foot-brand">
+        <img src="logo.png" alt="Eats AI" />
+        <span>Eats AI</span>
+      </a>
+      <p class="foot-tag">Your all-in-one AI nutrition companion. Snap, track, plan, thrive.</p>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>Download</h4>
+        <a href="https://apps.apple.com/us/app/eats-ai/id6759102367" target="_blank" rel="noopener">App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=org.eatsai.apps" target="_blank" rel="noopener">Google Play</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:admin@eatsai.org">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Muppbury Holdings LLC. All rights reserved.</span>
+    <span>Made for real life.</span>
+  </div>
 </footer>
 
+<!-- ── STICKY DOWNLOAD BAR (mobile) ──────────────────────── -->
+<div class="dl-bar" id="dlBar">
+  <div class="dl-bar-brand">
+    <img src="logo.png" alt="" />
+    <div>
+      <div class="dl-bar-name">Eats AI</div>
+      <div class="dl-bar-sub">Free 7-day trial</div>
+    </div>
+  </div>
+  <a href="#download" id="dlBtn" class="dl-bar-btn">Download Free</a>
+</div>
+
 <script>
+  // scroll-aware nav + sticky download bar
+  const nav = document.getElementById('nav');
+  const dlBar = document.getElementById('dlBar');
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+    dlBar.classList.toggle('show', window.scrollY > 560);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // send the sticky button straight to the right store
+  const dlBtn = document.getElementById('dlBtn');
+  if (/android/i.test(navigator.userAgent)) {
+    dlBtn.href = 'https://play.google.com/store/apps/details?id=org.eatsai.apps';
+  } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+    dlBtn.href = 'https://apps.apple.com/us/app/eats-ai/id6759102367';
+  }
+
+  // scroll reveal (skip above-fold elements so nothing flashes hidden)
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); } });
   }, { threshold: 0.08 });
@@ -690,6 +1185,70 @@ footer {
       io.observe(el);
     }
   });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MobileApplication",
+      "name": "Eats AI",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "HealthApplication",
+      "url": "https://eatsai.org",
+      "description": "All-in-one AI nutrition companion. Snap a photo to log calories and macros, manage your pantry, generate recipes, plan meals, and get restaurant dish recommendations near you.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free download with 7-day free trial" },
+      "installUrl": "https://apps.apple.com/us/app/eats-ai/id6759102367",
+      "publisher": { "@type": "Organization", "name": "Muppbury Holdings LLC" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the free trial work?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Every new account gets a 7-day free trial with full access to everything: AI scanning, recipes, meal plans, the works. No commitment: cancel anytime before the trial ends and you won't be charged." }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the AI photo scanning?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The AI recognizes thousands of foods and estimates portions from a single photo, and you can always adjust anything before saving. Estimates are for general wellness. If you have allergies or strict medical requirements, always verify ingredients independently." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it help me when I'm eating out?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, and this is where Eats AI is truly one of a kind. It analyzes your goals and taste profile, reads the menus of restaurants near you, and recommends the specific dishes that fit. No more guessing at the table." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it available on iPhone and Android?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Eats AI is on the App Store and Google Play." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it handle my dietary preferences and allergies?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Set your goals, dietary style, and allergies once, and every generated recipe and meal plan respects them automatically." }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Eats AI different from other calorie trackers?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most apps stop at logging what you ate. Eats AI covers the whole picture: photo and voice logging, a smart pantry with expiry alerts, recipes generated from what you own, weekly meal plans with shopping lists, and restaurant dish recommendations near you. One app instead of four." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does it cost after the trial?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Eats AI is free to download with a 7-day free trial of everything. After that, an affordable subscription unlocks full access. Current pricing is shown in the app and on the App Store and Google Play, and you can cancel anytime in seconds." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you sell my data?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. We never sell your personal data, and you can delete your account and all your data at any time from inside the app." }
+        }
+      ]
+    }
+  ]
+}
 </script>
 </body>
 </html>
