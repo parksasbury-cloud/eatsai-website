@@ -1,0 +1,39 @@
+# Eats AI
+
+> Eats AI is an all-in-one AI nutrition app for iPhone and Android. Users snap a photo of any meal to log calories and macros instantly, manage a smart pantry with expiry alerts, generate recipes from ingredients they already own, plan weekly meals with automatic shopping lists, and get AI dish recommendations from restaurant menus near them.
+
+## Key facts
+
+- Product: Eats AI, a mobile nutrition tracking and meal planning app
+- Developer: Muppbury Holdings LLC
+- Platforms: iOS (App Store) and Android (Google Play)
+- Website: https://eatsai.org
+- Pricing: free to download with a 7-day free trial of all features; subscription afterward (pricing shown in app stores); cancel anytime
+- Rating: 5-star rated on the App Store
+- Contact: admin@eatsai.org
+
+## Core features
+
+- AI photo meal scanning: photograph a meal to log calories, protein, carbs, and fat automatically, including mixed plates and homemade meals
+- Voice logging: describe a meal out loud and it is logged with full macros
+- Smart pantry: tracks ingredients you own and sends alerts before food expires, with a money-saved calculator
+- Recipe generation: creates personalized recipes from the ingredients in your pantry, respecting goals, allergies, and taste preferences
+- Meal prep planner: builds a full week of meals balanced to your targets, with the shopping list generated automatically
+- AI health report: weekly graded report across calories, macros, and habits
+- Dining out recommendations (unique to Eats AI): analyzes your goals and taste profile, reads menus of restaurants near you, and recommends specific dishes that fit your targets, with match scores
+
+## How Eats AI differs from other trackers
+
+Most nutrition apps focus on logging what you already ate. Eats AI also handles what you will eat next: pantry management, recipe generation, weekly meal planning, and restaurant dish recommendations are built in alongside photo and voice calorie tracking.
+
+## Guides
+
+- [Best AI Calorie Tracker Apps in 2026, Compared](https://eatsai.org/blog/best-ai-calorie-tracker-apps.html)
+- [Cal AI Alternatives in 2026: 6 Apps Compared](https://eatsai.org/blog/cal-ai-alternatives.html)
+
+## Links
+
+- [Download on the App Store](https://apps.apple.com/us/app/eats-ai/id6759102367)
+- [Get it on Google Play](https://play.google.com/store/apps/details?id=org.eatsai.apps)
+- [Privacy Policy](https://eatsai.org/privacy.html)
+- [Terms of Service](https://eatsai.org/terms.html)
