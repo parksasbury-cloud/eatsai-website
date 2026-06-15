@@ -159,14 +159,15 @@ section[id] { scroll-margin-top: 5rem; }
   border-radius: 60% 40% 45% 55% / 50% 55% 45% 50%;
   bottom: 0; left: 6%; z-index: 0;
 }
-.blob-line { inset: 0; z-index: 2; }
+.blob-line { inset: 0; z-index: 1; }
 .blob-line svg { width: 100%; height: 100%; overflow: visible; }
+/* simple phone device frame (thin, non-obstructing) */
+.device { position: relative; padding: 7px; background: linear-gradient(160deg, #fcfdfa, #eef1e8); border: 1px solid #dde3d4; border-radius: 2.7rem; box-shadow: 0 36px 70px rgba(30,63,20,.18), 0 10px 26px rgba(0,0,0,.08); }
+.device > img { display: block; width: 100%; border-radius: 2.2rem; border: 1px solid rgba(18,24,12,.05); }
+.device::after { content: ''; position: absolute; top: 23%; right: -2.5px; width: 3px; height: 58px; border-radius: 3px; background: #d3d9c9; }
 .hero-phone {
-  position: relative; z-index: 1;
-  width: clamp(260px, 27vw, 360px);
-  border-radius: 2.4rem;
-  border: 1px solid var(--line);
-  box-shadow: 0 40px 80px rgba(30,63,20,.18), 0 12px 30px rgba(0,0,0,.08);
+  position: relative; z-index: 2;
+  width: clamp(252px, 26vw, 348px);
   animation: floaty 7s ease-in-out infinite;
 }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
@@ -222,9 +223,7 @@ section[id] { scroll-margin-top: 5rem; }
 }
 .feat-shot {
   position: relative; z-index: 1;
-  width: clamp(230px, 24vw, 320px);
-  border-radius: 2.2rem; border: 1px solid var(--line);
-  box-shadow: 0 30px 60px rgba(30,63,20,.16), 0 8px 22px rgba(0,0,0,.07);
+  width: clamp(224px, 23vw, 308px);
 }
 
 /* ════════════════════════ COMPARISON ═══════════════════════════ */
@@ -413,7 +412,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
           <path d="M40 360 C 160 470, 360 430, 470 250" stroke="#79CFA0" stroke-width="6" stroke-linecap="round" fill="none" opacity=".9"/>
         </svg>
       </div>
-      <img class="hero-phone" src="hero-app.jpg" alt="Eats AI home dashboard showing daily calories, macros, and weekly progress" loading="eager" fetchpriority="high" />
+      <div class="device hero-phone">
+        <img src="hero-app.jpg" alt="Eats AI home dashboard showing daily calories, macros, and weekly progress" loading="eager" fetchpriority="high" />
+      </div>
     </div>
   </div>
 </section>
@@ -450,7 +451,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
-      <img class="feat-shot" src="app-home.jpg" alt="Eats AI home screen with daily calories and macro rings" loading="lazy" />
+      <div class="device feat-shot">
+        <img src="app-home.jpg" alt="Eats AI home screen with daily calories and macro rings" loading="lazy" />
+      </div>
     </div>
     <div class="feat-copy">
       <h2>Just <span class="g">snap it.</span></h2>
@@ -467,7 +470,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reverse reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--peach)"></div>
-      <img class="feat-shot" src="app-dining.jpg" alt="Eats AI Dining screen with restaurant dish recommendations and match scores" loading="lazy" />
+      <div class="device feat-shot">
+        <img src="app-dining.jpg" alt="Eats AI Dining screen with restaurant dish recommendations and match scores" loading="lazy" />
+      </div>
     </div>
     <div class="feat-copy">
       <span class="feat-badge">★ One of a kind</span>
@@ -493,7 +498,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob2)"></div>
-      <img class="feat-shot" src="app-cooking.jpg" alt="Eats AI cooking screen with AI-generated recipes matched to your macros" loading="lazy" />
+      <div class="device feat-shot">
+        <img src="app-cooking.jpg" alt="Eats AI cooking screen with AI-generated recipes matched to your macros" loading="lazy" />
+      </div>
     </div>
     <div class="feat-copy">
       <h2>Recipes from <span class="g">your kitchen.</span></h2>
@@ -510,7 +517,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reverse reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
-      <img class="feat-shot" src="app-pantry.jpg" alt="Eats AI pantry screen tracking ingredients and expiry dates" loading="lazy" />
+      <div class="device feat-shot">
+        <img src="app-pantry.jpg" alt="Eats AI pantry screen tracking ingredients and expiry dates" loading="lazy" />
+      </div>
     </div>
     <div class="feat-copy">
       <h2>Never waste <span class="g">food again.</span></h2>
@@ -527,7 +536,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--mint);opacity:.55"></div>
-      <img class="feat-shot" src="app-health.jpg" alt="Eats AI health screen with weight, BMI, streaks and a weekly health score" loading="lazy" />
+      <div class="device feat-shot">
+        <img src="app-health.jpg" alt="Eats AI health screen with weight, BMI, streaks and a weekly health score" loading="lazy" />
+      </div>
     </div>
     <div class="feat-copy">
       <h2>See your <span class="g">whole picture.</span></h2>
