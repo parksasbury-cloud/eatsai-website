@@ -259,13 +259,11 @@ section[id] { scroll-margin-top: 5rem; }
   position: absolute; width: 26rem; height: 26rem; max-width: 96%; z-index: 0;
   border-radius: 46% 54% 58% 42% / 52% 44% 56% 48%;
 }
-.feat-clip {
+.feat-media .fblob { display: none; }  /* device frame supplies depth; no blob halo behind */
+.feat-shot {  /* bigger phone: the bare app-screen video fills this device frame edge-to-edge */
   position: relative; z-index: 1;
-  width: clamp(212px, 22vw, 300px); aspect-ratio: 9 / 16;
-  border-radius: 1.9rem; overflow: hidden; background: var(--g-deep2);
-  box-shadow: 0 36px 72px rgba(30,63,20,.20), 0 10px 26px rgba(0,0,0,.10);
+  width: clamp(248px, 27vw, 358px);
 }
-.feat-clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ════════════════════════ LIFESTYLE BAND ═══════════════════════ */
 .life { padding: clamp(4.5rem, 10vh, 8rem) 0; }
@@ -564,7 +562,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
-      <div class="feat-clip">
+      <div class="device feat-shot">
         <video data-src="feat-scan.mp4" poster="feat-scan-poster.jpg" muted loop playsinline preload="none" aria-label="Eats AI home screen showing a snapped meal logged with calories and macros"><a href="feat-scan.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
@@ -583,7 +581,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reverse reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--peach)"></div>
-      <div class="feat-clip">
+      <div class="device feat-shot">
         <video data-src="feat-dining.mp4" poster="feat-dining-poster.jpg" muted loop playsinline preload="none" aria-label="Eats AI Dining screen with restaurant dish recommendations and match scores"><a href="feat-dining.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
@@ -611,7 +609,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob2)"></div>
-      <div class="feat-clip">
+      <div class="device feat-shot">
         <video data-src="feat-cook.mp4" poster="feat-cook-poster.jpg" muted loop playsinline preload="none" aria-label="Eats AI cooking screen with AI-generated recipes matched to your macros"><a href="feat-cook.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
@@ -630,7 +628,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reverse reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
-      <div class="feat-clip">
+      <div class="device feat-shot">
         <video data-src="feat-pantry.mp4" poster="feat-pantry-poster.jpg" muted loop playsinline preload="none" aria-label="Eats AI pantry screen tracking ingredients and expiry dates"><a href="feat-pantry.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
@@ -649,7 +647,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="feat-inner reveal">
     <div class="feat-media">
       <div class="fblob" style="background:var(--mint);opacity:.55"></div>
-      <div class="feat-clip">
+      <div class="device feat-shot">
         <video data-src="feat-health.mp4" poster="feat-health-poster.jpg" muted loop playsinline preload="none" aria-label="Eats AI health screen with weight, BMI, streaks and a weekly health score"><a href="feat-health.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
@@ -871,7 +869,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   // Feature videos: lazy-load + autoplay muted only while in view.
   // Respects reduced-motion, Save-Data, and slow (2g) connections — those get tap-to-play controls instead.
   (function () {
-    const reelVids = document.querySelectorAll('.feat-clip video');
+    const reelVids = document.querySelectorAll('.feat-shot video');
     if (!reelVids.length) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const conn = navigator.connection || {};
