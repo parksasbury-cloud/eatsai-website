@@ -965,6 +965,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
         if (e.isIntersecting) {
           attach(v); v.muted = true;
           v.playbackRate = v.closest('.hero-phone') ? 0.6 : 0.72; // slowed down
+          try { v.currentTime = 0; } catch (_) {} // restart from the beginning on (re-)entry
           const p = v.play();
           if (p && p.catch) p.catch(() => {}); // autoplay blocked → poster stays
         } else {
