@@ -445,7 +445,9 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   .life-media { min-height: 30rem; }
   .testi-grid { grid-template-columns: repeat(2, 1fr); }
   .foot-inner { flex-direction: column; gap: 2.4rem; }
+  .foot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.9rem 1.5rem; }  /* 4 link columns wrap to 2×2 instead of overflowing */
   .dl-bar { display: flex; }
+  .dl-bar-brand { min-width: 0; }
   footer { padding-bottom: 5.5rem; }
 }
 @media (max-width: 560px) {
