@@ -421,10 +421,13 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
 /* ════════════════════════ RESPONSIVE ═══════════════════════════ */
 @media (max-width: 960px) {
   .nav-links { display: none; }
-  .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; padding-top: 7rem; }
+  .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2.25rem; padding-top: 6.5rem; }
   .hero-sub { margin-left: auto; margin-right: auto; }
-  .hero .badges, .hero-proof { justify-content: center; }
+  .hero .badges { justify-content: center; }
+  /* stars stacked on top of the proof line, centered */
+  .hero-proof { flex-direction: column; gap: .5rem; text-align: center; margin-top: 1.7rem; }
   .hero-visual { min-height: 26rem; }
+  .intro { padding: clamp(3rem, 7vh, 5rem) 0 clamp(.5rem, 2vh, 1.5rem); }
   .feat-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
   .feat-inner.reverse .feat-media { order: 0; }
   .feat-copy p { margin-left: auto; margin-right: auto; }
@@ -446,6 +449,29 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   .store-badge { height: 46px; }
   .store-badge-play { height: 68px; margin: -11px 0; }
   .comp-table th, .comp-table td { padding: .85rem .85rem; font-size: .85rem; }
+  /* ── typography: tighter, more balanced headings ── */
+  .hero h1 { font-size: clamp(2.7rem, 12.5vw, 3.5rem); line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 1.3rem; }
+  .hero-sub { font-size: 1.05rem; line-height: 1.62; margin-bottom: 1.8rem; max-width: 24rem; }
+  .hero-proof { font-size: .94rem; }
+  .hero-proof .stars { font-size: 1.25rem; letter-spacing: .18em; }
+  .intro h2 { font-size: clamp(1.95rem, 8.6vw, 2.55rem); }
+  .intro p { font-size: 1.02rem; }
+  .reviews-head h2 { font-size: clamp(2rem, 8.6vw, 2.7rem); }
+  .final-card h2 { font-size: clamp(2.25rem, 10vw, 3rem); }
+  .compare-head h2, .faq-head h2, .fcar-head h2, .life-copy h2 { font-size: clamp(1.85rem, 8vw, 2.4rem); }
+  .fcar-head p, .compare-head p, .feat-copy p, .life-copy p { font-size: 1rem; }
+  /* ── spacing: calmer vertical rhythm, comfortable gutters ── */
+  .hero-inner { padding-top: 6rem; gap: 2rem; }
+  .trust-inner { gap: 1rem 1.5rem; padding: 1.25rem var(--pad-x); }
+  .trust-item { font-size: .9rem; }
+  .reviews { padding: clamp(3.5rem, 8vh, 5rem) 0; }
+  .fcar { padding: clamp(3rem, 7vh, 4.5rem) 0 clamp(3.5rem, 8vh, 5rem); }
+  .fcar-head p { max-width: 22rem; }
+  .fcar-item figcaption { margin-top: 1rem; }
+  .fcar-item figcaption b { font-size: .96rem; }
+  .fcar-item figcaption span { font-size: .8rem; max-width: 11.5rem; }
+  .final-card { padding: clamp(3rem, 7vh, 4.5rem) 1.5rem; }
+  .final-fine { flex-wrap: wrap; line-height: 1.5; }
 }
 </style>
 </head>
