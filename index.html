@@ -279,6 +279,19 @@ section[id] { scroll-margin-top: 5rem; }
 .life-chip b { font-family: var(--disp); font-size: .9rem; color: var(--ink); display: block; margin-top: .2rem; }
 .life-chip span { font-size: .72rem; color: var(--ink3); }
 
+/* ════════════════════════ VIDEO REEL ═══════════════════════════ */
+.reel { position: relative; overflow: hidden; padding: clamp(4rem, 9vh, 7rem) 0; background: var(--s1); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.reel::before { content: ''; position: absolute; top: 16%; left: 50%; transform: translateX(-50%); width: 56rem; max-width: 96%; aspect-ratio: 2.4 / 1; background: radial-gradient(ellipse at center, rgba(167,213,120,.30), transparent 70%); pointer-events: none; }
+.reel-head { position: relative; text-align: center; max-width: var(--maxw); margin: 0 auto 1rem; padding: 0 var(--pad-x); }
+.reel-head h2 { font-size: clamp(1.85rem, 4vw, 2.9rem); font-weight: 700; line-height: 1.05; }
+.reel-head h2 .g { color: var(--g); }
+.reel-head p { color: var(--ink2); font-size: 1.02rem; margin-top: .7rem; }
+.reel-scroll { position: relative; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.reel-scroll::-webkit-scrollbar { display: none; }
+.reel-row { display: flex; gap: clamp(.8rem, 1.6vw, 1.5rem); width: max-content; margin: 0 auto; padding: 2rem var(--pad-x) 2.2rem; }
+.reel-card { flex: none; width: clamp(196px, 19vw, 262px); aspect-ratio: 9 / 16; border-radius: 1.7rem; overflow: hidden; position: relative; background: var(--g-deep2); box-shadow: 0 32px 64px rgba(30,63,20,.20), 0 10px 26px rgba(0,0,0,.10); }
+.reel-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
 /* ════════════════════════ COMPARISON ═══════════════════════════ */
 .compare { padding: clamp(4rem, 9vh, 7rem) 0; background: var(--s1); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .compare-head { text-align: center; margin-bottom: 3rem; }
@@ -647,6 +660,22 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   </div>
 </section>
 
+<!-- ───────────── VIDEO REEL ───────────── -->
+<section class="reel">
+  <div class="reel-head reveal">
+    <h2>See Eats AI <span class="g">in action.</span></h2>
+    <p>Built around your goal — lose weight, eat healthier, build muscle, or save money.</p>
+  </div>
+  <div class="reel-scroll">
+    <div class="reel-row">
+      <div class="reel-card"><video data-src="demo-lose.mp4" poster="demo-lose.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: snap your meal and watch your trend head down"><a href="demo-lose.mp4">Watch the Eats AI demo</a></video></div>
+      <div class="reel-card"><video data-src="demo-healthy.mp4" poster="demo-healthy.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: healthy recipes filtered for how you eat"><a href="demo-healthy.mp4">Watch the Eats AI demo</a></video></div>
+      <div class="reel-card"><video data-src="demo-muscle.mp4" poster="demo-muscle.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: high-protein recipes balanced to your macros"><a href="demo-muscle.mp4">Watch the Eats AI demo</a></video></div>
+      <div class="reel-card"><video data-src="demo-save.mp4" poster="demo-save.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: stock your pantry and watch the savings add up"><a href="demo-save.mp4">Watch the Eats AI demo</a></video></div>
+    </div>
+  </div>
+</section>
+
 <!-- ───────────── COMPARISON ───────────── -->
 <section class="compare" id="compare">
   <div class="shell">
@@ -851,6 +880,34 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       io.observe(el);
     }
   });
+
+  // Reel videos: lazy-load + autoplay muted only while in view.
+  // Respects reduced-motion, Save-Data, and slow (2g) connections — those get tap-to-play controls instead.
+  (function () {
+    const reelVids = document.querySelectorAll('.reel-card video');
+    if (!reelVids.length) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const conn = navigator.connection || {};
+    const cheapData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
+    const attach = (v) => { if (!v.src && v.dataset.src) v.src = v.dataset.src; };
+    if (reduce || cheapData) {
+      reelVids.forEach(v => { attach(v); v.setAttribute('controls', ''); }); // no autoplay; let users play on demand
+      return;
+    }
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        const v = e.target;
+        if (e.isIntersecting) {
+          attach(v); v.muted = true;
+          const p = v.play();
+          if (p && p.catch) p.catch(() => { v.setAttribute('controls', ''); }); // autoplay blocked → show controls
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+    reelVids.forEach(v => vio.observe(v));
+  })();
 </script>
 
 <script type="application/ld+json">
