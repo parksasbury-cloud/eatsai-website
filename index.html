@@ -204,14 +204,11 @@ section[id] { scroll-margin-top: 5rem; }
 .fcar-head h2 .g { color: var(--g); }
 .fcar-head p { color: var(--ink2); font-size: 1.02rem; margin-top: .7rem; max-width: 42rem; margin-left: auto; margin-right: auto; }
 .fcar-track { position: relative; margin-top: 2.6rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
-.fcar-lane { display: flex; width: max-content; padding: 1.4rem 0 1rem; animation: fcar-scroll 52s linear infinite; will-change: transform; }
-.fcar:hover .fcar-lane { animation-play-state: paused; }
+.fcar-lane { display: flex; width: max-content; padding: 1.2rem 0 1rem; animation: fcar-scroll 60s linear infinite; will-change: transform; }
 @keyframes fcar-scroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.fcar-item { flex: none; width: clamp(186px, 18vw, 248px); margin-right: clamp(1.1rem, 2.4vw, 2.1rem); display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
-.fcar-item .device { width: 100%; }
-/* stagger keyed to the 7-per-set period so set A and set B match → seamless loop */
-.fcar-item:nth-child(7n+3) .device, .fcar-item:nth-child(7n+6) .device { transform: translateY(-1.2rem); }
-.fcar-item.is-star .device { transform: translateY(-.2rem) scale(1.05); filter: drop-shadow(0 14px 26px rgba(30,63,20,.28)); }
+.fcar-item { flex: none; width: clamp(232px, 23vw, 320px); margin-right: clamp(1.2rem, 2.6vw, 2.3rem); display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+.fcar-item .device { width: 100%; }  /* every mockup the same size */
+.fcar-item.is-star .device { filter: drop-shadow(0 16px 30px rgba(30,63,20,.26)); }  /* dining: subtle lift, same size */
 .fcar-item figcaption { margin-top: 1.2rem; }
 .fcar-item figcaption b { display: block; font-family: var(--disp); font-weight: 700; font-size: 1rem; color: var(--ink); }
 .fcar-item figcaption span { display: block; font-size: .82rem; color: var(--ink3); margin-top: .25rem; line-height: 1.4; max-width: 14rem; }
