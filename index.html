@@ -173,8 +173,8 @@ section[id] { scroll-margin-top: 5rem; }
     0 44px 80px rgba(30,63,20,.20),
     0 16px 34px rgba(0,0,0,.12);
 }
-.device > img {
-  display: block; width: 100%;
+.device > img, .device > video {
+  display: block; width: 100%; height: auto;
   border-radius: 2.35rem;
   box-shadow: 0 0 0 3px #14160f, inset 0 0 0 1px rgba(0,0,0,.22);
 }
@@ -562,7 +562,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
       <div class="device feat-shot">
-        <img src="app-home.jpg" alt="Eats AI home screen with daily calories and macro rings" loading="lazy" />
+        <video data-src="feat-scan.mp4" poster="app-home.jpg" muted loop playsinline preload="none" aria-label="Eats AI home screen showing a snapped meal logged with calories and macros"><a href="feat-scan.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -581,7 +581,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--peach)"></div>
       <div class="device feat-shot">
-        <img src="app-dining.jpg" alt="Eats AI Dining screen with restaurant dish recommendations and match scores" loading="lazy" />
+        <video data-src="feat-dining.mp4" poster="app-dining.jpg" muted loop playsinline preload="none" aria-label="Eats AI Dining screen with restaurant dish recommendations and match scores"><a href="feat-dining.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -609,7 +609,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob2)"></div>
       <div class="device feat-shot">
-        <img src="app-cooking.jpg" alt="Eats AI cooking screen with AI-generated recipes matched to your macros" loading="lazy" />
+        <video data-src="feat-cook.mp4" poster="app-cooking.jpg" muted loop playsinline preload="none" aria-label="Eats AI cooking screen with AI-generated recipes matched to your macros"><a href="feat-cook.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -628,7 +628,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
       <div class="device feat-shot">
-        <img src="app-pantry.jpg" alt="Eats AI pantry screen tracking ingredients and expiry dates" loading="lazy" />
+        <video data-src="feat-pantry.mp4" poster="app-pantry.jpg" muted loop playsinline preload="none" aria-label="Eats AI pantry screen tracking ingredients and expiry dates"><a href="feat-pantry.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -647,7 +647,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--mint);opacity:.55"></div>
       <div class="device feat-shot">
-        <img src="app-health.jpg" alt="Eats AI health screen with weight, BMI, streaks and a weekly health score" loading="lazy" />
+        <video data-src="feat-health.mp4" poster="app-health.jpg" muted loop playsinline preload="none" aria-label="Eats AI health screen with weight, BMI, streaks and a weekly health score"><a href="feat-health.mp4">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -656,22 +656,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       <a class="arrow-link" href="#download">Track your goals
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── VIDEO REEL ───────────── -->
-<section class="reel">
-  <div class="reel-head reveal">
-    <h2>See Eats AI <span class="g">in action.</span></h2>
-    <p>Built around your goal — lose weight, eat healthier, build muscle, or save money.</p>
-  </div>
-  <div class="reel-scroll">
-    <div class="reel-row">
-      <div class="reel-card"><video data-src="demo-lose.mp4" poster="demo-lose.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: snap your meal and watch your trend head down"><a href="demo-lose.mp4">Watch the Eats AI demo</a></video></div>
-      <div class="reel-card"><video data-src="demo-healthy.mp4" poster="demo-healthy.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: healthy recipes filtered for how you eat"><a href="demo-healthy.mp4">Watch the Eats AI demo</a></video></div>
-      <div class="reel-card"><video data-src="demo-muscle.mp4" poster="demo-muscle.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: high-protein recipes balanced to your macros"><a href="demo-muscle.mp4">Watch the Eats AI demo</a></video></div>
-      <div class="reel-card"><video data-src="demo-save.mp4" poster="demo-save.jpg" muted loop playsinline preload="none" aria-label="Eats AI demo: stock your pantry and watch the savings add up"><a href="demo-save.mp4">Watch the Eats AI demo</a></video></div>
     </div>
   </div>
 </section>
@@ -881,10 +865,10 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     }
   });
 
-  // Reel videos: lazy-load + autoplay muted only while in view.
+  // Feature videos: lazy-load + autoplay muted only while in view.
   // Respects reduced-motion, Save-Data, and slow (2g) connections — those get tap-to-play controls instead.
   (function () {
-    const reelVids = document.querySelectorAll('.reel-card video');
+    const reelVids = document.querySelectorAll('.feat-shot video');
     if (!reelVids.length) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const conn = navigator.connection || {};
