@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://eatsai.org/" />
   <link rel="icon" href="logo.png" />
   <link rel="apple-touch-icon" href="logo.png" />
-  <link rel="preload" as="image" href="feat-scan-poster.jpg?v=4" />
+  <link rel="preload" as="image" href="feat-scan-poster.jpg?v=5" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -191,7 +191,7 @@ section[id] { scroll-margin-top: 5rem; }
 }
 .hero-phone {
   position: relative; z-index: 2;
-  width: clamp(252px, 26vw, 348px);
+  width: clamp(268px, 28vw, 380px);
   animation: floaty 7s ease-in-out infinite;
 }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
@@ -262,7 +262,7 @@ section[id] { scroll-margin-top: 5rem; }
 .feat-media .fblob { display: none; }  /* device frame supplies depth; no blob halo behind */
 .feat-clip {  /* SaaS explainer videos sit in a clean 9:16 card (they bring their own framing) */
   position: relative; z-index: 1;
-  width: clamp(220px, 24vw, 320px); aspect-ratio: 9 / 16;
+  width: clamp(256px, 30vw, 392px); aspect-ratio: 9 / 16;
   border-radius: 1.9rem; overflow: hidden; background: var(--s2);
   box-shadow: 0 28px 60px rgba(30,63,20,.16), 0 8px 22px rgba(0,0,0,.09);
 }
@@ -383,6 +383,26 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
 .foot-col a:hover { color: var(--g-ink); }
 .foot-bottom { border-top: 1px solid var(--line); max-width: var(--maxw); margin: 0 auto; padding: 1.4rem var(--pad-x); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--ink3); }
 
+/* ════════════════════ AMBIENT MUSIC TOGGLE ═════════════════════ */
+.bgm-toggle {
+  position: fixed; bottom: 1.15rem; left: 1.15rem; z-index: 210;
+  width: 3rem; height: 3rem; border-radius: 50%;
+  background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 12px 30px rgba(30,63,20,.18);
+  display: grid; place-items: center; cursor: pointer; color: var(--g-ink);
+  transition: transform .2s, background .2s, color .2s;
+}
+.bgm-toggle:hover { transform: translateY(-2px); background: var(--s2); }
+.bgm-toggle .bars { display: flex; align-items: center; gap: 3px; height: 18px; }
+.bgm-toggle .bars i { width: 3px; height: 6px; background: currentColor; border-radius: 2px; transition: height .2s; }
+.bgm-toggle.playing .bars i { animation: eq .9s ease-in-out infinite; }
+.bgm-toggle.playing .bars i:nth-child(2) { animation-delay: .18s; }
+.bgm-toggle.playing .bars i:nth-child(3) { animation-delay: .36s; }
+.bgm-toggle.playing .bars i:nth-child(4) { animation-delay: .12s; }
+@keyframes eq { 0%,100% { height: 5px; } 50% { height: 17px; } }
+@media (prefers-reduced-motion: reduce) { .bgm-toggle.playing .bars i { animation: none; height: 11px; } }
+@media (max-width: 960px) { .bgm-toggle { bottom: 5.5rem; } }
+
 /* ════════════════════ STICKY DOWNLOAD BAR ══════════════════════ */
 .dl-bar {
   position: fixed; left: .75rem; right: .75rem; bottom: .75rem; z-index: 200;
@@ -487,7 +507,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
         </svg>
       </div>
       <div class="device hero-phone">
-        <video src="feat-scan.mp4?v=4" poster="feat-scan-poster.jpg?v=4" muted loop playsinline preload="auto" aria-label="Eats AI: snap a meal photo and see calories and macros logged instantly"></video>
+        <video src="feat-scan.mp4?v=5" poster="feat-scan-poster.jpg?v=5" muted loop playsinline preload="auto" aria-label="Eats AI: snap a meal photo and see calories and macros logged instantly"></video>
       </div>
     </div>
   </div>
@@ -566,7 +586,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
       <div class="feat-clip">
-        <video data-src="ex-scan.mp4?v=4" poster="ex-scan-poster.jpg?v=4" muted loop playsinline preload="none" aria-label="Eats AI home screen showing a snapped meal logged with calories and macros"><a href="ex-scan.mp4?v=4">Watch the Eats AI demo</a></video>
+        <video data-src="ex-scan.mp4?v=5" poster="ex-scan-poster.jpg?v=5" muted loop playsinline preload="none" aria-label="Eats AI home screen showing a snapped meal logged with calories and macros"><a href="ex-scan.mp4?v=5">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -585,7 +605,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--peach)"></div>
       <div class="feat-clip">
-        <video data-src="ex-dining.mp4?v=4" poster="ex-dining-poster.jpg?v=4" muted loop playsinline preload="none" aria-label="Eats AI Dining screen with restaurant dish recommendations and match scores"><a href="ex-dining.mp4?v=4">Watch the Eats AI demo</a></video>
+        <video data-src="ex-dining.mp4?v=5" poster="ex-dining-poster.jpg?v=5" muted loop playsinline preload="none" aria-label="Eats AI Dining screen with restaurant dish recommendations and match scores"><a href="ex-dining.mp4?v=5">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -613,7 +633,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob2)"></div>
       <div class="feat-clip">
-        <video data-src="ex-cook.mp4?v=4" poster="ex-cook-poster.jpg?v=4" muted loop playsinline preload="none" aria-label="Eats AI cooking screen with AI-generated recipes matched to your macros"><a href="ex-cook.mp4?v=4">Watch the Eats AI demo</a></video>
+        <video data-src="ex-cook.mp4?v=5" poster="ex-cook-poster.jpg?v=5" muted loop playsinline preload="none" aria-label="Eats AI cooking screen with AI-generated recipes matched to your macros"><a href="ex-cook.mp4?v=5">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -632,7 +652,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--g-blob)"></div>
       <div class="feat-clip">
-        <video data-src="ex-pantry.mp4?v=4" poster="ex-pantry-poster.jpg?v=4" muted loop playsinline preload="none" aria-label="Eats AI pantry screen tracking ingredients and expiry dates"><a href="ex-pantry.mp4?v=4">Watch the Eats AI demo</a></video>
+        <video data-src="ex-pantry.mp4?v=5" poster="ex-pantry-poster.jpg?v=5" muted loop playsinline preload="none" aria-label="Eats AI pantry screen tracking ingredients and expiry dates"><a href="ex-pantry.mp4?v=5">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -651,7 +671,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     <div class="feat-media">
       <div class="fblob" style="background:var(--mint);opacity:.55"></div>
       <div class="feat-clip">
-        <video data-src="ex-health.mp4?v=4" poster="ex-health-poster.jpg?v=4" muted loop playsinline preload="none" aria-label="Eats AI health screen with weight, BMI, streaks and a weekly health score"><a href="ex-health.mp4?v=4">Watch the Eats AI demo</a></video>
+        <video data-src="ex-health.mp4?v=5" poster="ex-health-poster.jpg?v=5" muted loop playsinline preload="none" aria-label="Eats AI health screen with weight, BMI, streaks and a weekly health score"><a href="ex-health.mp4?v=5">Watch the Eats AI demo</a></video>
       </div>
     </div>
     <div class="feat-copy">
@@ -830,6 +850,12 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   </div>
 </footer>
 
+<!-- ───────────── AMBIENT MUSIC ───────────── -->
+<audio id="bgm" loop preload="none"><source src="ambient.m4a" type="audio/mp4" /></audio>
+<button class="bgm-toggle paused" id="bgmToggle" type="button" aria-label="Toggle background music" aria-pressed="false" title="Background music">
+  <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+</button>
+
 <!-- ───────────── STICKY DOWNLOAD BAR ───────────── -->
 <div class="dl-bar" id="dlBar">
   <div class="dl-bar-brand">
@@ -843,6 +869,39 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
 </div>
 
 <script>
+  // ── Ambient background music: soft loop, starts on first interaction, toggle to mute ──
+  (function () {
+    const audio = document.getElementById('bgm');
+    const btn = document.getElementById('bgmToggle');
+    if (!audio || !btn) return;
+    audio.volume = 0.32; // soothing, in the background
+    let on = localStorage.getItem('eatsai-bgm') !== 'off'; // default on
+    const sync = () => {
+      const playing = on && !audio.paused;
+      btn.classList.toggle('playing', playing);
+      btn.classList.toggle('paused', !playing);
+      btn.setAttribute('aria-pressed', String(playing));
+    };
+    const tryPlay = () => { if (on) { const p = audio.play(); if (p && p.catch) p.catch(() => {}); } };
+    // browsers block audio-with-sound until a user gesture — start on the first one
+    const onFirst = (e) => {
+      if (e.target && e.target.closest && e.target.closest('#bgmToggle')) return; // button manages itself
+      tryPlay();
+      document.removeEventListener('pointerdown', onFirst, true);
+      document.removeEventListener('keydown', onFirst, true);
+    };
+    document.addEventListener('pointerdown', onFirst, true);
+    document.addEventListener('keydown', onFirst, true);
+    btn.addEventListener('click', () => {
+      if (audio.paused) { on = true; localStorage.setItem('eatsai-bgm', 'on'); const p = audio.play(); if (p && p.catch) p.catch(() => {}); }
+      else { on = false; localStorage.setItem('eatsai-bgm', 'off'); audio.pause(); }
+      sync();
+    });
+    audio.addEventListener('play', sync);
+    audio.addEventListener('pause', sync);
+    sync();
+  })();
+
   const nav = document.getElementById('nav');
   const dlBar = document.getElementById('dlBar');
   const onScroll = () => {
