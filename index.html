@@ -275,7 +275,7 @@ section[id] { scroll-margin-top: 5rem; }
 .life-main { position: relative; z-index: 1; width: clamp(340px, 46vw, 600px); aspect-ratio: 4 / 3.2; object-fit: cover; border-radius: 2.2rem; box-shadow: 0 40px 80px rgba(30,63,20,.22), 0 12px 30px rgba(0,0,0,.12); }
 .life-inset { position: absolute; z-index: 2; bottom: -2rem; left: clamp(-1rem, 1vw, 1.5rem); width: clamp(180px, 21vw, 280px); aspect-ratio: 1 / 1.05; object-fit: cover; border-radius: 1.5rem; border: 7px solid #fff; box-shadow: 0 22px 48px rgba(0,0,0,.18); }
 .life-chip { position: absolute; z-index: 3; top: 1.5rem; right: clamp(-.5rem, 1vw, 1rem); background: #fff; border: 1px solid var(--line); border-radius: 1.1rem; padding: .85rem 1.15rem; box-shadow: 0 16px 38px rgba(30,63,20,.16); }
-.life-chip .stars { font-size: .92rem; display: block; }
+.life-chip span.stars { font-size: 1rem; display: block; color: #F5B301; letter-spacing: .14em; }
 .life-chip b { font-family: var(--disp); font-size: .9rem; color: var(--ink); display: block; margin-top: .2rem; }
 .life-chip span { font-size: .72rem; color: var(--ink3); }
 
@@ -476,6 +476,29 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   </div>
 </section>
 
+<!-- ───────────── LIFESTYLE BAND ───────────── -->
+<section class="life">
+  <div class="life-inner reveal">
+    <div class="life-copy">
+      <h2>Made for real kitchens,<br><span class="g">real life.</span></h2>
+      <p>Eats AI fits the way you already cook and eat: busy weeknights, takeout nights, family dinners, and everything in between. No rigid rules, just smart help that meets you where you are.</p>
+      <a class="arrow-link" href="#download">Make it yours
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="life-media">
+      <div class="lblob"></div>
+      <img class="life-main" src="lifestyle-cook.jpg" alt="A person cooking a healthy meal in a bright modern kitchen" loading="lazy" />
+      <img class="life-inset" src="lifestyle-prep.jpg" alt="Hands preparing fresh vegetables and salad ingredients" loading="lazy" />
+      <div class="life-chip">
+        <span class="stars">★★★★★</span>
+        <b>Loved by home cooks</b>
+        <span>5-star rated on the App Store</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ───────────── PHONE SHOWCASE ───────────── -->
 <section class="showcase">
   <div class="showcase-head reveal">
@@ -620,29 +643,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       <a class="arrow-link" href="#download">Track your goals
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── LIFESTYLE BAND ───────────── -->
-<section class="life">
-  <div class="life-inner reveal">
-    <div class="life-copy">
-      <h2>Made for real kitchens,<br><span class="g">real life.</span></h2>
-      <p>Eats AI fits the way you already cook and eat: busy weeknights, takeout nights, family dinners, and everything in between. No rigid rules, just smart help that meets you where you are.</p>
-      <a class="arrow-link" href="#download">Make it yours
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-    <div class="life-media">
-      <div class="lblob"></div>
-      <img class="life-main" src="lifestyle-cook.jpg" alt="A person cooking a healthy meal in a bright modern kitchen" loading="lazy" />
-      <img class="life-inset" src="lifestyle-prep.jpg" alt="Hands preparing fresh vegetables and salad ingredients" loading="lazy" />
-      <div class="life-chip">
-        <span class="stars">★★★★★</span>
-        <b>Loved by home cooks</b>
-        <span>5-star rated on the App Store</span>
-      </div>
     </div>
   </div>
 </section>
