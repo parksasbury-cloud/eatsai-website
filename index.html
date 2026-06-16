@@ -196,19 +196,30 @@ section[id] { scroll-margin-top: 5rem; }
 }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
 
-/* ════════════════════════ PHONE SHOWCASE ═══════════════════════ */
-.showcase { position: relative; overflow: hidden; padding: clamp(3.5rem, 8vh, 6rem) 0 clamp(4rem, 9vh, 7rem); background: var(--s1); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.showcase::before { content: ''; position: absolute; top: 14%; left: 50%; transform: translateX(-50%); width: 58rem; max-width: 96%; aspect-ratio: 2.2 / 1; background: radial-gradient(ellipse at center, rgba(167,213,120,.34), transparent 70%); pointer-events: none; }
-.showcase-head { position: relative; text-align: center; max-width: var(--maxw); margin: 0 auto 1rem; padding: 0 var(--pad-x); }
-.showcase-head h2 { font-size: clamp(1.85rem, 4vw, 2.9rem); font-weight: 700; line-height: 1.05; }
-.showcase-head h2 .g { color: var(--g); }
-.showcase-head p { color: var(--ink2); font-size: 1.02rem; margin-top: .7rem; }
-.showcase-scroll { position: relative; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.showcase-scroll::-webkit-scrollbar { display: none; }
-.showcase-row { display: flex; align-items: center; gap: clamp(.7rem, 1.5vw, 1.4rem); width: max-content; margin: 0 auto; padding: 2rem var(--pad-x) 2.2rem; }
-.showcase-row .device { flex: none; width: clamp(168px, 16.5vw, 220px); }
-.showcase-row .device:nth-child(2n) { transform: translateY(-1.7rem); }
-.showcase-row .device:nth-child(3) { transform: translateY(.5rem) scale(1.05); z-index: 2; }
+/* ═══════════════ INFINITE FEATURE CAROUSEL (marquee) ════════════ */
+.fcar { position: relative; overflow: hidden; padding: clamp(3.5rem, 8vh, 6rem) 0 clamp(4rem, 9vh, 6.5rem); background: var(--s1); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.fcar::before { content: ''; position: absolute; top: 16%; left: 50%; transform: translateX(-50%); width: 58rem; max-width: 96%; aspect-ratio: 2.4 / 1; background: radial-gradient(ellipse at center, rgba(167,213,120,.30), transparent 70%); pointer-events: none; }
+.fcar-head { position: relative; text-align: center; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad-x); }
+.fcar-head h2 { font-size: clamp(1.85rem, 4vw, 2.9rem); font-weight: 700; line-height: 1.05; }
+.fcar-head h2 .g { color: var(--g); }
+.fcar-head p { color: var(--ink2); font-size: 1.02rem; margin-top: .7rem; max-width: 42rem; margin-left: auto; margin-right: auto; }
+.fcar-track { position: relative; margin-top: 2.6rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+.fcar-lane { display: flex; width: max-content; padding: 1.4rem 0 1rem; animation: fcar-scroll 52s linear infinite; will-change: transform; }
+.fcar:hover .fcar-lane { animation-play-state: paused; }
+@keyframes fcar-scroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.fcar-item { flex: none; width: clamp(186px, 18vw, 248px); margin-right: clamp(1.1rem, 2.4vw, 2.1rem); display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+.fcar-item .device { width: 100%; }
+.fcar-item:nth-child(2n) .device { transform: translateY(-1.3rem); }
+.fcar-item.is-star .device { transform: translateY(-.2rem) scale(1.05); filter: drop-shadow(0 14px 26px rgba(30,63,20,.28)); }
+.fcar-item figcaption { margin-top: 1.2rem; }
+.fcar-item figcaption b { display: block; font-family: var(--disp); font-weight: 700; font-size: 1rem; color: var(--ink); }
+.fcar-item figcaption span { display: block; font-size: .82rem; color: var(--ink3); margin-top: .25rem; line-height: 1.4; max-width: 14rem; }
+.fcar-badge { position: absolute; top: -.55rem; left: 50%; transform: translateX(-50%); z-index: 4; white-space: nowrap; background: var(--g); color: #fff; font-family: var(--disp); font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .34rem .72rem; border-radius: 99px; box-shadow: 0 8px 20px rgba(30,63,20,.24); }
+@media (prefers-reduced-motion: reduce) {
+  .fcar-track { overflow-x: auto; scrollbar-width: none; }
+  .fcar-track::-webkit-scrollbar { display: none; }
+  .fcar-lane { animation: none; width: max-content; }
+}
 
 /* ════════════════════════ TRUST STRIP ══════════════════════════ */
 .trust {
@@ -383,26 +394,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
 .foot-col a:hover { color: var(--g-ink); }
 .foot-bottom { border-top: 1px solid var(--line); max-width: var(--maxw); margin: 0 auto; padding: 1.4rem var(--pad-x); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--ink3); }
 
-/* ════════════════════ AMBIENT MUSIC TOGGLE ═════════════════════ */
-.bgm-toggle {
-  position: fixed; bottom: 1.15rem; left: 1.15rem; z-index: 210;
-  width: 3rem; height: 3rem; border-radius: 50%;
-  background: #fff; border: 1px solid var(--line);
-  box-shadow: 0 12px 30px rgba(30,63,20,.18);
-  display: grid; place-items: center; cursor: pointer; color: var(--g-ink);
-  transition: transform .2s, background .2s, color .2s;
-}
-.bgm-toggle:hover { transform: translateY(-2px); background: var(--s2); }
-.bgm-toggle .bars { display: flex; align-items: center; gap: 3px; height: 18px; }
-.bgm-toggle .bars i { width: 3px; height: 6px; background: currentColor; border-radius: 2px; transition: height .2s; }
-.bgm-toggle.playing .bars i { animation: eq .9s ease-in-out infinite; }
-.bgm-toggle.playing .bars i:nth-child(2) { animation-delay: .18s; }
-.bgm-toggle.playing .bars i:nth-child(3) { animation-delay: .36s; }
-.bgm-toggle.playing .bars i:nth-child(4) { animation-delay: .12s; }
-@keyframes eq { 0%,100% { height: 5px; } 50% { height: 17px; } }
-@media (prefers-reduced-motion: reduce) { .bgm-toggle.playing .bars i { animation: none; height: 11px; } }
-@media (max-width: 960px) { .bgm-toggle { bottom: 5.5rem; } }
-
 /* ════════════════════ STICKY DOWNLOAD BAR ══════════════════════ */
 .dl-bar {
   position: fixed; left: .75rem; right: .75rem; bottom: .75rem; z-index: 200;
@@ -468,7 +459,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   </a>
   <div class="nav-links">
     <a href="#how">How it works</a>
-    <a href="#dining">Dining out</a>
+    <a href="#features">Features</a>
     <a href="#compare">Compare</a>
     <a href="#reviews">Reviews</a>
     <a href="#faq">FAQ</a>
@@ -511,23 +502,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       <div class="device hero-phone">
         <video src="feat-scan.mp4?v=6" poster="feat-scan-poster.jpg?v=6" muted loop playsinline preload="auto" aria-label="Eats AI: snap a meal photo and see calories and macros logged instantly"></video>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── PHONE SHOWCASE ───────────── -->
-<section class="showcase">
-  <div class="showcase-head reveal">
-    <h2>Five tools. <span class="g">One app.</span></h2>
-    <p>Snap, plan, cook, dine out, and track — every screen built to feel effortless.</p>
-  </div>
-  <div class="showcase-scroll">
-    <div class="showcase-row">
-      <div class="device"><img src="app-cooking.jpg" alt="Eats AI cooking screen with AI recipes" loading="lazy" /></div>
-      <div class="device"><img src="app-dining.jpg" alt="Eats AI dining screen with restaurant recommendations" loading="lazy" /></div>
-      <div class="device"><img src="app-home.jpg" alt="Eats AI home dashboard with calories and macros" loading="lazy" /></div>
-      <div class="device"><img src="app-health.jpg" alt="Eats AI health screen with weight and streaks" loading="lazy" /></div>
-      <div class="device"><img src="app-pantry.jpg" alt="Eats AI pantry screen tracking ingredients" loading="lazy" /></div>
     </div>
   </div>
 </section>
@@ -579,110 +553,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   <div class="reveal">
     <h2>Everything you need,<br><span class="g">nothing you don't.</span></h2>
     <p>Most apps stop at counting calories. Eats AI handles the whole life of your food, from the grocery bag to the plate to the table at your favorite restaurant.</p>
-  </div>
-</section>
-
-<!-- ───────────── FEATURE: SCAN ───────────── -->
-<section class="feat">
-  <div class="feat-inner reveal">
-    <div class="feat-media">
-      <div class="fblob" style="background:var(--g-blob)"></div>
-      <div class="feat-clip">
-        <video data-src="ex-scan.mp4?v=6" poster="ex-scan-poster.jpg?v=6" muted loop playsinline preload="none" aria-label="Eats AI home screen showing a snapped meal logged with calories and macros"><a href="ex-scan.mp4?v=6">Watch the Eats AI demo</a></video>
-      </div>
-    </div>
-    <div class="feat-copy">
-      <h2>Just <span class="g">snap it.</span></h2>
-      <p>Point your camera at any meal and Eats AI logs the calories, protein, carbs, and fat in seconds, even mixed plates and homemade food. Hands full? Log it by voice instead. No database searching, no guesswork.</p>
-      <a class="arrow-link" href="#download">Start logging free
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── FEATURE: DINING (one of a kind) ───────────── -->
-<section class="feat" id="dining">
-  <div class="feat-inner reverse reveal">
-    <div class="feat-media">
-      <div class="fblob" style="background:var(--peach)"></div>
-      <div class="feat-clip">
-        <video data-src="ex-dining.mp4?v=6" poster="ex-dining-poster.jpg?v=6" muted loop playsinline preload="none" aria-label="Eats AI Dining screen with restaurant dish recommendations and match scores"><a href="ex-dining.mp4?v=6">Watch the Eats AI demo</a></video>
-      </div>
-    </div>
-    <div class="feat-copy">
-      <span class="feat-badge">★ One of a kind</span>
-      <h2>Eating out? <span class="g">Still on track.</span></h2>
-      <p>No other nutrition app does this. Eats AI reads the menus of restaurants near you and recommends the exact dishes that fit your goals and taste, with a match score for each one. Ordering well stops being a guessing game.</p>
-      <a class="arrow-link" href="#download">See how it works
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── INTRO 2 ───────────── -->
-<section class="intro shell">
-  <div class="reveal">
-    <h2>Cook from <span class="g">what you have.</span></h2>
-    <p>Tell Eats AI what's in your fridge and it builds personalized recipes around your goals, allergies, and taste, so you skip the 9pm grocery run.</p>
-  </div>
-</section>
-
-<!-- ───────────── FEATURE: COOK ───────────── -->
-<section class="feat">
-  <div class="feat-inner reveal">
-    <div class="feat-media">
-      <div class="fblob" style="background:var(--g-blob2)"></div>
-      <div class="feat-clip">
-        <video data-src="ex-cook.mp4?v=6" poster="ex-cook-poster.jpg?v=6" muted loop playsinline preload="none" aria-label="Eats AI cooking screen with AI-generated recipes matched to your macros"><a href="ex-cook.mp4?v=6">Watch the Eats AI demo</a></video>
-      </div>
-    </div>
-    <div class="feat-copy">
-      <h2>Recipes from <span class="g">your kitchen.</span></h2>
-      <p>Every recipe is generated around the ingredients you already own and the targets you set. Save the ones you love, and turn a whole week of meals into a single shopping list with one tap.</p>
-      <a class="arrow-link" href="#download">Get cooking
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── FEATURE: PANTRY ───────────── -->
-<section class="feat">
-  <div class="feat-inner reverse reveal">
-    <div class="feat-media">
-      <div class="fblob" style="background:var(--g-blob)"></div>
-      <div class="feat-clip">
-        <video data-src="ex-pantry.mp4?v=6" poster="ex-pantry-poster.jpg?v=6" muted loop playsinline preload="none" aria-label="Eats AI pantry screen tracking ingredients and expiry dates"><a href="ex-pantry.mp4?v=6">Watch the Eats AI demo</a></video>
-      </div>
-    </div>
-    <div class="feat-copy">
-      <h2>Never waste <span class="g">food again.</span></h2>
-      <p>Your smart pantry tracks everything you own and warns you before it expires. Less waste, lower grocery bills, and the app even tallies the money you save along the way.</p>
-      <a class="arrow-link" href="#download">Stock your pantry
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ───────────── FEATURE: HEALTH ───────────── -->
-<section class="feat">
-  <div class="feat-inner reveal">
-    <div class="feat-media">
-      <div class="fblob" style="background:var(--mint);opacity:.55"></div>
-      <div class="feat-clip">
-        <video data-src="ex-health.mp4?v=6" poster="ex-health-poster.jpg?v=6" muted loop playsinline preload="none" aria-label="Eats AI health screen with weight, BMI, streaks and a weekly health score"><a href="ex-health.mp4?v=6">Watch the Eats AI demo</a></video>
-      </div>
-    </div>
-    <div class="feat-copy">
-      <h2>See your <span class="g">whole picture.</span></h2>
-      <p>A weekly AI health report grades your progress across calories, macros, weight, and habits, then gives you exactly one thing to improve next week. Encouragement, not a guilt trip.</p>
-      <a class="arrow-link" href="#download">Track your goals
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -791,6 +661,62 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   </div>
 </section>
 
+<!-- ───────────── INFINITE FEATURE CAROUSEL ───────────── -->
+<section class="fcar" id="features">
+  <div class="fcar-head reveal">
+    <h2>Five tools. <span class="g">One app.</span></h2>
+    <p>Snap a meal, dine out on track, cook from your fridge, run a smart pantry, and see your whole picture. Every screen built to feel effortless.</p>
+  </div>
+  <div class="fcar-track">
+    <div class="fcar-lane">
+      <!-- set A -->
+      <figure class="fcar-item">
+        <div class="device"><img src="app-home.jpg" alt="Eats AI home dashboard with calories and macros" loading="lazy" /></div>
+        <figcaption><b>Snap &amp; log</b><span>Calories and macros in seconds</span></figcaption>
+      </figure>
+      <figure class="fcar-item is-star">
+        <span class="fcar-badge">★ One of a kind</span>
+        <div class="device"><img src="app-dining.jpg" alt="Eats AI dining screen with restaurant dish recommendations" loading="lazy" /></div>
+        <figcaption><b>Dining out</b><span>Order the dish that fits your goals</span></figcaption>
+      </figure>
+      <figure class="fcar-item">
+        <div class="device"><img src="app-cooking.jpg" alt="Eats AI cooking screen with AI recipes from your fridge" loading="lazy" /></div>
+        <figcaption><b>Cook smart</b><span>Recipes from what you already have</span></figcaption>
+      </figure>
+      <figure class="fcar-item">
+        <div class="device"><img src="app-pantry.jpg" alt="Eats AI pantry screen tracking ingredients and expiry" loading="lazy" /></div>
+        <figcaption><b>Smart pantry</b><span>Use it before it expires</span></figcaption>
+      </figure>
+      <figure class="fcar-item">
+        <div class="device"><img src="app-health.jpg" alt="Eats AI health screen with weight, streaks and score" loading="lazy" /></div>
+        <figcaption><b>Whole picture</b><span>A weekly health score that adds up</span></figcaption>
+      </figure>
+      <!-- set B (duplicate for a seamless infinite loop) -->
+      <figure class="fcar-item" aria-hidden="true">
+        <div class="device"><img src="app-home.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>Snap &amp; log</b><span>Calories and macros in seconds</span></figcaption>
+      </figure>
+      <figure class="fcar-item is-star" aria-hidden="true">
+        <span class="fcar-badge">★ One of a kind</span>
+        <div class="device"><img src="app-dining.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>Dining out</b><span>Order the dish that fits your goals</span></figcaption>
+      </figure>
+      <figure class="fcar-item" aria-hidden="true">
+        <div class="device"><img src="app-cooking.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>Cook smart</b><span>Recipes from what you already have</span></figcaption>
+      </figure>
+      <figure class="fcar-item" aria-hidden="true">
+        <div class="device"><img src="app-pantry.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>Smart pantry</b><span>Use it before it expires</span></figcaption>
+      </figure>
+      <figure class="fcar-item" aria-hidden="true">
+        <div class="device"><img src="app-health.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>Whole picture</b><span>A weekly health score that adds up</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ───────────── FINAL CTA ───────────── -->
 <section class="final" id="download">
   <div class="shell">
@@ -824,7 +750,7 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       <div class="foot-col">
         <h4>Product</h4>
         <a href="#how">How it works</a>
-        <a href="#dining">Dining out</a>
+        <a href="#features">Features</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
       </div>
@@ -852,12 +778,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   </div>
 </footer>
 
-<!-- ───────────── AMBIENT MUSIC ───────────── -->
-<audio id="bgm" loop preload="none"><source src="ambient.m4a" type="audio/mp4" /></audio>
-<button class="bgm-toggle paused" id="bgmToggle" type="button" aria-label="Toggle background music" aria-pressed="false" title="Background music">
-  <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-</button>
-
 <!-- ───────────── STICKY DOWNLOAD BAR ───────────── -->
 <div class="dl-bar" id="dlBar">
   <div class="dl-bar-brand">
@@ -871,39 +791,6 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
 </div>
 
 <script>
-  // ── Ambient background music: soft loop, starts on first interaction, toggle to mute ──
-  (function () {
-    const audio = document.getElementById('bgm');
-    const btn = document.getElementById('bgmToggle');
-    if (!audio || !btn) return;
-    audio.volume = 0.32; // soothing, in the background
-    let on = localStorage.getItem('eatsai-bgm') !== 'off'; // default on
-    const sync = () => {
-      const playing = on && !audio.paused;
-      btn.classList.toggle('playing', playing);
-      btn.classList.toggle('paused', !playing);
-      btn.setAttribute('aria-pressed', String(playing));
-    };
-    const tryPlay = () => { if (on) { const p = audio.play(); if (p && p.catch) p.catch(() => {}); } };
-    // browsers block audio-with-sound until a user gesture — start on the first one
-    const onFirst = (e) => {
-      if (e.target && e.target.closest && e.target.closest('#bgmToggle')) return; // button manages itself
-      tryPlay();
-      document.removeEventListener('pointerdown', onFirst, true);
-      document.removeEventListener('keydown', onFirst, true);
-    };
-    document.addEventListener('pointerdown', onFirst, true);
-    document.addEventListener('keydown', onFirst, true);
-    btn.addEventListener('click', () => {
-      if (audio.paused) { on = true; localStorage.setItem('eatsai-bgm', 'on'); const p = audio.play(); if (p && p.catch) p.catch(() => {}); }
-      else { on = false; localStorage.setItem('eatsai-bgm', 'off'); audio.pause(); }
-      sync();
-    });
-    audio.addEventListener('play', sync);
-    audio.addEventListener('pause', sync);
-    sync();
-  })();
-
   const nav = document.getElementById('nav');
   const dlBar = document.getElementById('dlBar');
   const onScroll = () => {
@@ -930,22 +817,23 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     }
   });
 
-  // Feature videos: lazy-load + autoplay muted only while in view.
-  // Reduced-motion, Save-Data, slow (2g), or autoplay-blocked → leave the static poster
-  // (no native controls — they overlap the app UI and look broken).
+  // Hero video: autoplay muted only while in view, played slow for a calm feel.
+  // Reduced-motion, Save-Data, slow (2g), or autoplay-blocked leaves the static poster
+  // (no native controls, which would overlap the app UI and look broken).
   (function () {
-    const reelVids = document.querySelectorAll('.feat-clip video, .hero-phone video');
+    const reelVids = document.querySelectorAll('.hero-phone video');
     if (!reelVids.length) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const conn = navigator.connection || {};
     const cheapData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
     if (reduce || cheapData) return; // poster stays; no autoplay
+    const SPEED = 0.6; // slowed down
     const attach = (v) => { if (!v.src && v.dataset.src) v.src = v.dataset.src; };
     const vio = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         const v = e.target;
         if (e.isIntersecting) {
-          attach(v); v.muted = true;
+          attach(v); v.muted = true; v.playbackRate = SPEED;
           const p = v.play();
           if (p && p.catch) p.catch(() => {}); // autoplay blocked → poster stays
         } else {
