@@ -209,7 +209,8 @@ section[id] { scroll-margin-top: 5rem; }
 @keyframes fcar-scroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 .fcar-item { flex: none; width: clamp(186px, 18vw, 248px); margin-right: clamp(1.1rem, 2.4vw, 2.1rem); display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
 .fcar-item .device { width: 100%; }
-.fcar-item:nth-child(2n) .device { transform: translateY(-1.3rem); }
+/* stagger keyed to the 7-per-set period so set A and set B match → seamless loop */
+.fcar-item:nth-child(7n+3) .device, .fcar-item:nth-child(7n+6) .device { transform: translateY(-1.2rem); }
 .fcar-item.is-star .device { transform: translateY(-.2rem) scale(1.05); filter: drop-shadow(0 14px 26px rgba(30,63,20,.28)); }
 .fcar-item figcaption { margin-top: 1.2rem; }
 .fcar-item figcaption b { display: block; font-family: var(--disp); font-weight: 700; font-size: 1rem; color: var(--ink); }
@@ -690,12 +691,12 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
 <!-- ───────────── INFINITE FEATURE CAROUSEL ───────────── -->
 <section class="fcar" id="features">
   <div class="fcar-head reveal">
-    <h2>Five tools. <span class="g">One app.</span></h2>
-    <p>Snap a meal, dine out on track, cook from your fridge, run a smart pantry, and see your whole picture. Every screen built to feel effortless.</p>
+    <h2>Every screen. <span class="g">One app.</span></h2>
+    <p>Snap a meal, dine out on track, cook from your fridge, run a smart pantry, track your activity, ask your AI coach, and see your whole picture.</p>
   </div>
   <div class="fcar-track">
     <div class="fcar-lane">
-      <!-- set A -->
+      <!-- set A (7 screens) -->
       <figure class="fcar-item">
         <div class="device"><img src="app-home.jpg" alt="Eats AI home dashboard with calories and macros" loading="lazy" /></div>
         <figcaption><b>Snap &amp; log</b><span>Calories and macros in seconds</span></figcaption>
@@ -716,6 +717,14 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       <figure class="fcar-item">
         <div class="device"><img src="app-health.jpg" alt="Eats AI health screen with weight, streaks and score" loading="lazy" /></div>
         <figcaption><b>Whole picture</b><span>A weekly health score that adds up</span></figcaption>
+      </figure>
+      <figure class="fcar-item">
+        <div class="device"><img src="app-activity.jpg" alt="Eats AI activity screen with steps and calories burned" loading="lazy" /></div>
+        <figcaption><b>Activity</b><span>Steps, workouts, calories burned</span></figcaption>
+      </figure>
+      <figure class="fcar-item">
+        <div class="device"><img src="app-coach.jpg" alt="Eats AI coach chat answering nutrition questions" loading="lazy" /></div>
+        <figcaption><b>AI coach</b><span>Ask anything about food</span></figcaption>
       </figure>
       <!-- set B (duplicate for a seamless infinite loop) -->
       <figure class="fcar-item" aria-hidden="true">
@@ -738,6 +747,14 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
       <figure class="fcar-item" aria-hidden="true">
         <div class="device"><img src="app-health.jpg" alt="" loading="lazy" /></div>
         <figcaption><b>Whole picture</b><span>A weekly health score that adds up</span></figcaption>
+      </figure>
+      <figure class="fcar-item" aria-hidden="true">
+        <div class="device"><img src="app-activity.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>Activity</b><span>Steps, workouts, calories burned</span></figcaption>
+      </figure>
+      <figure class="fcar-item" aria-hidden="true">
+        <div class="device"><img src="app-coach.jpg" alt="" loading="lazy" /></div>
+        <figcaption><b>AI coach</b><span>Ask anything about food</span></figcaption>
       </figure>
     </div>
   </div>
