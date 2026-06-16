@@ -867,25 +867,23 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
   });
 
   // Feature videos: lazy-load + autoplay muted only while in view.
-  // Respects reduced-motion, Save-Data, and slow (2g) connections — those get tap-to-play controls instead.
+  // Reduced-motion, Save-Data, slow (2g), or autoplay-blocked → leave the static poster
+  // (no native controls — they overlap the app UI and look broken).
   (function () {
     const reelVids = document.querySelectorAll('.feat-shot video');
     if (!reelVids.length) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const conn = navigator.connection || {};
     const cheapData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
+    if (reduce || cheapData) return; // poster stays; no autoplay
     const attach = (v) => { if (!v.src && v.dataset.src) v.src = v.dataset.src; };
-    if (reduce || cheapData) {
-      reelVids.forEach(v => { attach(v); v.setAttribute('controls', ''); }); // no autoplay; let users play on demand
-      return;
-    }
     const vio = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         const v = e.target;
         if (e.isIntersecting) {
           attach(v); v.muted = true;
           const p = v.play();
-          if (p && p.catch) p.catch(() => { v.setAttribute('controls', ''); }); // autoplay blocked → show controls
+          if (p && p.catch) p.catch(() => {}); // autoplay blocked → poster stays
         } else {
           v.pause();
         }
