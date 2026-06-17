@@ -193,6 +193,14 @@ section[id] { scroll-margin-top: 5rem; }
   position: relative; z-index: 2;
   width: clamp(268px, 28vw, 380px);
   animation: floaty 7s ease-in-out infinite;
+  /* clean, neutral contact shadow (the green-tinted .device shadow looked detached
+     on the now-plain-white hero); negative spread keeps it tucked under the phone */
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.55),
+    inset 0 2px 2px rgba(255,255,255,.65),
+    inset 0 -2px 4px rgba(0,0,0,.10),
+    0 34px 52px -32px rgba(20,24,15,.28),
+    0 12px 24px -14px rgba(0,0,0,.10);
 }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
 
