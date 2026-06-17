@@ -958,8 +958,14 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
     const conn = navigator.connection || {};
     const cheapData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
     if (reduce || cheapData) return; // poster stays; no autoplay
-    const attach = (v) => { if (!v.src && v.dataset.src) v.src = v.dataset.src; };
-    const vio = new IntersectionObserver((entries) => {
+    const attach = (v) => { if (!v.src && v.dataset.src) { v.src = v.dataset.src; v.load(); } };
+    // Preload each clip ~700px before it enters view so it's buffered in time and the
+    // poster never visibly flashes — the still→video swap happens off-screen.
+    const loadIo = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { attach(e.target); loadIo.unobserve(e.target); } });
+    }, { rootMargin: '700px 0px 700px 0px' });
+    // Play from the start only once actually in view; pause when it leaves.
+    const playIo = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         const v = e.target;
         if (e.isIntersecting) {
@@ -972,8 +978,8 @@ footer { background: var(--s1); border-top: 1px solid var(--line); }
           v.pause();
         }
       });
-    }, { threshold: 0.35 });
-    reelVids.forEach(v => vio.observe(v));
+    }, { threshold: 0.25 });
+    reelVids.forEach(v => { loadIo.observe(v); playIo.observe(v); });
   })();
 </script>
 
