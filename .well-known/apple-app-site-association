@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "GZ3SYTY5NS.org.eatsai.app",
+        "paths": [ "/auth/tiktok/*" ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [ "GZ3SYTY5NS.org.eatsai.app" ]
+  }
+}
